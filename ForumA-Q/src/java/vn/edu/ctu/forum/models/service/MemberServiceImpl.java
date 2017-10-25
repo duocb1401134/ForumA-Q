@@ -96,6 +96,7 @@ public class MemberServiceImpl implements MemberService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public Member findByEmail(String email) {
         try {
             ResultSet rs = memberDAO.findByEmail(email);
@@ -143,6 +144,7 @@ public class MemberServiceImpl implements MemberService {
         return rs;
        }
     
+    @Override
     public Member login(String email, String pass) {
         Member m = findByEmail(email);
         if (m != null) {

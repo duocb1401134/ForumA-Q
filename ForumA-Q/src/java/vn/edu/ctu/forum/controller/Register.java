@@ -41,10 +41,13 @@ public class Register extends HttpServlet {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String pass2 = HashMD5.md5(request.getParameter("password2"));        
-        MemberService memberService = new MemberServiceImpl(null);
-       
+        MemberService memberService = new MemberServiceImpl(null);       
         Member member = new Member(name, email, pass2);
+        
         if (memberService.addMember(member)) {
+            memberService.releaseConnection();
+            memberService = new MemberServiceImpl(memberService.getConnectionPool());
+            member = memberService.findByEmail(email);
             HttpSession session = request.getSession();
             session.setAttribute("member", member);
             response.sendRedirect("index.jsp");
