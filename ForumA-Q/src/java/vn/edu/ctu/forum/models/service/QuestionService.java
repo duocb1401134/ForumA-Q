@@ -5,6 +5,7 @@
  */
 package vn.edu.ctu.forum.models.service;
 
+import java.sql.ResultSet;
 import java.util.List;
 import vn.edu.ctu.forum.models.pojos.Question;
 
@@ -28,4 +29,8 @@ public interface QuestionService extends BaseService{
     public List<Question> findByIdMember(int id);
     //Lay Question chua 
     public List<Question> findByAccect();
+    //Find ID Subject
+    public ResultSet findByidSubject(String id);
+    //delete member accept
+    public boolean delAcceptQuestion(int id);
 }

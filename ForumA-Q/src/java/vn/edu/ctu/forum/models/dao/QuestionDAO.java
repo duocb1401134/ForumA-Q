@@ -21,6 +21,8 @@ public interface QuestionDAO extends BaseDAO {
     public boolean editQuestionAccept(int id);
     //Xoa Question
     public boolean delQuetion(int id);
+    //delete member accept
+    public boolean delAcceptQuestion(int id);
     //Lay toan bo danh sach
     public ResultSet findAll();
     //Lay theo Id
@@ -29,5 +31,7 @@ public interface QuestionDAO extends BaseDAO {
     public ResultSet findByIdQuestion(int id);
     //Lay Question chua 
     public ResultSet findByAccect();
+    //Find ID Subject
+    public ResultSet findByidSubject(String id);
     
 }

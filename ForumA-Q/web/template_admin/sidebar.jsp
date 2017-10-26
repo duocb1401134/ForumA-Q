@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="vn.edu.ctu.forum.models.pojos.Member"%>
+<%@page import="vn.edu.ctu.forum.models.pojos.Question" %>
 <aside>
     <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->
@@ -30,8 +31,8 @@
                         <span>Admin</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#">Accept member</a></li>
-                        <li><a href="#">Accept question</a></li>
+                        <li><a href="acceptmember.jsp">Accept member</a></li>
+                        <li><a href="acceptquestion.jsp">Accept question</a></li>
                         <li><a href="#">Add subject</a></li>
                     </ul>
                 </li>                

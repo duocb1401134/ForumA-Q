@@ -24,6 +24,11 @@ public class Member {
     private Date memberDateRegister;
     private String memberIntroduce;
     private boolean memberAccept;
+    
+    public Member(Integer memberId, boolean memberAccept){
+    this.memberId = memberId;
+    this.memberAccept = memberAccept;
+    }
 
     public Member(Integer memberId, String memberName, String memberEmail, String memberPass, String memberSex, Date memberBirthDay, boolean memberIsAdmin, Date memberDateRegister, String memberIntroduce, boolean memberAccept) {
         this.memberId = memberId;
@@ -62,6 +67,10 @@ public class Member {
     }
 
     public Member() {
+    }
+    
+    public Member(Integer MemberId){
+    this.memberId = MemberId;
     }
 
     public String getStrDate() {

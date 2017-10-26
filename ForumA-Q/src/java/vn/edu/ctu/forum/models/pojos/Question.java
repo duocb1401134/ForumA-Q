@@ -111,6 +111,7 @@ public class Question {
         this.questionContent = questionContent;
     }
     
+    
 
     public Question(Integer questionId, String subjectId, Integer memberId, String questionName, String questionDecription, String questionContent) {
         this.questionId = questionId;
@@ -132,5 +133,22 @@ public class Question {
         this.questionAccept = questionAccept;
     }
     public  Question(){
+    }
+    public  Question(Integer id){
+        this.questionId= id;    
+    }
+    public  Question(Integer questionId, boolean  AcceptQuestion){
+        this.questionId = questionId;
+        this.questionAccept = AcceptQuestion;
+    }
+    
+     public Question(Integer questionId, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, boolean questionAccept) {
+        this.questionId = questionId;
+        this.member = member;
+        this.questionName = questionName;
+        this.questionDecription = questionDecription;
+        this.questionContent = questionContent;
+        this.questionDate = questionDate;
+        this.questionAccept = questionAccept;
     }
 }

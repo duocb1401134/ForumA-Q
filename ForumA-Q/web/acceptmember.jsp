@@ -4,6 +4,9 @@
     Author     : Administrator
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="vn.edu.ctu.forum.models.service.MemberServiceImpl"%>
+<%@page import="vn.edu.ctu.forum.controller.AcceptMember"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="//template_admin/header.jsp" %>
@@ -16,32 +19,49 @@
                     Accept Member
                 </div>
                 <div>
+                    <% 
+                        MemberServiceImpl memberservice = new MemberServiceImpl(null);
+                        List<Member> list =  memberservice.findAcceptMember();
+                        
+                        %>
                     <table class="table">
                         <thead>
+                            
                             <tr>
                                 <th data-breakpoints="xs">ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Sex</th>
-                                <th>Password</th>
                                 <th>BirthDay</th>
                                 <th>Admin</th>
                                 <th>Date Register</th>
-                                <th data-breakpoints="xs">Intruduce/th>
-
-                                <th data-breakpoints="xs sm md" data-title="DOB">Accepted</th>
+                                <th>Intruduce</th>
+                                  
+                                <th>Accepted</th>
                             </tr>
                         </thead>
                         <tbody>
+                        <% for(int i = 0; i < list.size() ; i++){ %>
                             <tr data-expanded="true">
-                                <td>1</td>
-                                <td>Dennise</td>
-                                <td>Fuhrman</td>
-                                <td>High School History Teacher</td>
+                                <td><%=list.get(i).getMemberId()%></td>
+                                <td><%=list.get(i).getMemberName() %></td>                                
+                                <td><%=list.get(i).getMemberEmail() %></td>
+                                <td><%=list.get(i).getMemberSex() %></td>
+                                <td><%=list.get(i).getMemberBirthDay() %></td>
 
-                                <td>July 25th 1960</td>
+                                <td><%=list.get(i).isMemberIsAdmin() %></td>
+                                <td><%=list.get(i).getMemberDateRegister() %></td>
+                                <td><%=list.get(i).getMemberIntroduce()%></td>
+                                <td>
+                                  
+                                       <a href="acceptMember?id=<%=list.get(i).getMemberId()%>" class="active" ui-toggle-class=""> 
+                                           <i class="fa fa-check text-success text-active">  
+                                            </i></a>
+                                        <a href="delAcceptMember?id=<%=list.get(i).getMemberId()%>" class="active" ui-toggle-class=""> 
+                                            <i class="fa fa-times text-danger text"></i></a>
+                                </td>
                             </tr>
-                          
+                        <%}%>
                         </tbody>
                     </table>
                     <div class="row">

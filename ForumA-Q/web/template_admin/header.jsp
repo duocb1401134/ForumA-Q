@@ -7,6 +7,7 @@
 <%@page import="vn.edu.ctu.forum.models.pojos.Image"%>
 <%@page import="vn.edu.ctu.forum.models.service.ImageServiceImpl"%>
 <%@page import="vn.edu.ctu.forum.models.pojos.Member"%>
+
 <head>
 <head>
     <title>Forum A-Q</title>
@@ -248,7 +249,7 @@
                         Member member = (Member) request.getSession().getAttribute("member");
                         ImageServiceImpl imageService = new ImageServiceImpl(null);
                         Image image = imageService.findByIdMember(member.getMemberId());
-
+                        
                     %>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">

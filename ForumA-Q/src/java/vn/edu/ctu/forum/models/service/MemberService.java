@@ -16,8 +16,11 @@ public interface MemberService extends BaseService{
     public boolean addMember(Member m);   
     public boolean editMember(Member m);
     public boolean delMember();
+    //delete member accept
+    public boolean delAcceptMember(int id);
     // lay danh sach member chua appcept
     public boolean  editAcceptMember(int id);
+    
     public List<Member> findAcceptMember();
     //lay tat ca
     public List<Member> findAll();

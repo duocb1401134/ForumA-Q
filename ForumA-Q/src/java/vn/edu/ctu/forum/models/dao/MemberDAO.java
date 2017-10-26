@@ -20,6 +20,8 @@ public interface MemberDAO extends BaseDAO{
     public boolean editAcceptMember(int id);
     //delete member
     public boolean delMember(int id);
+    //delete member accept
+    public boolean delAcceptMember(int id);
     // lay danh sach member
     public ResultSet findAll();
     // lay member theo id

@@ -14,7 +14,7 @@ import vn.edu.ctu.forum.models.pojos.Subject;
  */
 public interface SubjectDAO extends BaseDAO{
     //them Subject
-    public boolean addSubject(Subject sb, int image_Id);
+    public boolean addSubject(Subject sb);
     //sua Subject 
     public boolean editSubject(Subject sb);
     //xoa Subject
@@ -23,8 +23,5 @@ public interface SubjectDAO extends BaseDAO{
     public ResultSet findAll();
     // tim co dieu kien
     public ResultSet findByID(String id);
-    //tim kiem limit
-    public ResultSet findByID(int start, int limit);
-
-    public void releaseConnectionPool();
+   
 }

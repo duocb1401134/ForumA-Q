@@ -128,18 +128,26 @@ public class MemberDAOImpl extends BaseDAOImpl implements MemberDAO {
     @Override
     public boolean editAcceptMember(int id) {
         try {
-            Member member = new Member();
-            String sql = "UPDATE `member` SET `member_accept`= 1 WHERE `member_id` = ?";
-            PreparedStatement pre = connection.prepareStatement(sql);
+            Member member = new Member(id);
+            String sql = "UPDATE `member` SET `member_accept`=1 WHERE `member_id`=?";
+            PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return true;
+            return this.edit(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(MemberDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-
+//    public static void main(String[] args) {
+//        MemberDAO m = new MemberDAOImpl(null);
+//        
+//        if(m.editAcceptMember(3)){
+//                        
+//            System.out.println("OK");
+//        }else
+//        System.out.println("eooo");
+//    }
     @Override
     public ResultSet findById(int id) {
         try {
@@ -169,4 +177,17 @@ public class MemberDAOImpl extends BaseDAOImpl implements MemberDAO {
         }
         return false;
     }    
+
+    @Override
+    public boolean delAcceptMember(int id) {
+         try {
+            String sql = "UPDATE `member` SET `member_accept`=2 WHERE `member_id`=?";
+            PreparedStatement pre = this.connection.prepareStatement(sql);
+            pre.setInt(1, id);
+            return this.edit(pre);
+        } catch (SQLException ex) {
+            Logger.getLogger(MemberDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }

@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> findAcceptMember() {
        ResultSet rs = this.memberDAO.findByAccept();
-        List<Member> listMember = new ArrayList<>();
+        List<Member> list = new ArrayList<>();
         try {            
             while (rs.next()) {
                 try {
@@ -75,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
                             rs.getDate("member_birthday"),rs.getBoolean("member_isAdmin"),
                             rs.getDate("member_date_register"),rs.getString("member_introduce"),
                             rs.getBoolean("member_accept"));
-                    listMember.add(mb);
+                    list.add(mb);
                 } catch (SQLException ex) {
                     Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -83,13 +83,9 @@ public class MemberServiceImpl implements MemberService {
         } catch (SQLException ex) {
             Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return listMember;
+        return list;
     }
-
-    @Override
-    public List<Member> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     public List<Member> find(int start, int limit) {
@@ -122,6 +118,17 @@ public class MemberServiceImpl implements MemberService {
         }
         return null;
     }
+    
+    
+//    public static void main(String[] args) {
+//        MemberService membs = new MemberServiceImpl(null);
+//        List<Member> list =membs.findAcceptMember();
+//        
+//        for(int i = 0; i< list.size();i++){
+//            System.out.println(list.get(i).getMemberName());
+//        }
+//    }
+    
 
     @Override
     public ConnectionPool getConnectionPool() {
@@ -140,10 +147,19 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean editAcceptMember(int id) {
-        boolean rs = this.memberDAO.editAcceptMember(id);
+        boolean rs = memberDAO.editAcceptMember(id);
+        Member m = new Member(id);
         return rs;
        }
-    
+//    public static void main(String[] args) {
+//        MemberService mbsv = new MemberServiceImpl(null);
+//        if(mbsv.editAcceptMember(3)){
+//         System.out.println("oke");
+//        }
+//        else{
+//           System.out.println("eo");
+//        }
+//    }
     @Override
     public Member login(String email, String pass) {
         Member m = findByEmail(email);
@@ -167,7 +183,17 @@ public class MemberServiceImpl implements MemberService {
 //            System.out.println("eo");
 //        }
 //    }
-
+        
+//    public static void main(String[] args) {
+//       SubjectService s = new SubjectServiceImpl(null);
+//       
+//       if(s.findById("2")!=null){
+//           System.out.println("ok");
+//           System.out.println(s.findById("2").getSubjectName());
+//       }
+//       else
+//           System.out.println("no");
+//    }
     @Override
     public Member findById(int id) {
         try {
@@ -219,4 +245,16 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
     }
+
+    @Override
+    public List<Member> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delAcceptMember(int id) {
+        boolean rs = memberDAO.delAcceptMember(id);
+        Member m = new Member(id);
+        return rs;
+        }
 }

@@ -3,7 +3,9 @@
     Created on : Oct 21, 2017, 1:32:33 PM
     Author     : Administrator
 --%>
-
+<%@page import="java.util.List"%>
+<%@page import="vn.edu.ctu.forum.models.service.QuestionServiceImpl"%>
+<%@page import="vn.edu.ctu.forum.controller.AcceptQuestion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="//template_admin/header.jsp" %>
@@ -16,6 +18,11 @@
                     Accept Question
                 </div>
                 <div>
+                    <%
+                      
+                        QuestionServiceImpl qssv = new QuestionServiceImpl(null);
+                        List<Question> list1 = qssv.findByAccect();
+                    %>
                     <table class="table">
                         <thead>
                             <tr>
@@ -26,21 +33,28 @@
                                 <th>Discription</th>
                                 <th>Content</th>
                                 <th>Date Register</th>
-                                <th data-breakpoints="xs">Intruduce/th>
-
-                                <th data-breakpoints="xs sm md" data-title="DOB">Accepted</th>
+                                <th>Accepted</th>
                             </tr>
                         </thead>
                         <tbody>
+                             <% for(int i = 0; i < list1.size() ; i++){ %>
                             <tr data-expanded="true">
-                                <td>1</td>
-                                <td>Dennise</td>
-                                <td>Fuhrman</td>
-                                <td>High School History Teacher</td>
-
-                                <td>July 25th 1960</td>
+                                <td><%=list1.get(i).getQuestionId() %></td>
+                                <td></td>
+                                <td><%=list1.get(i).getMemberId()  %></td>
+                                <td><%=list1.get(i).getQuestionId()  %></td>
+                                <td><%= list1.get(i).getQuestionDecription()  %></td>
+                                <td><%= list1.get(i).getQuestionDate()  %></td>
+                                <td><%= list1.get(i).getQuestionContent()  %></td>
+                                
+                                 <td><a href="acceptQuestion?id=<%=list1.get(i).getQuestionId() %>" class="active" ui-toggle-class=""> 
+                                           <i class="fa fa-check text-success text-active">  
+                                            </i></a>
+                                        <a href="delAcceptQuestion?id=<%=list1.get(i).getQuestionId()  %>" class="active" ui-toggle-class=""> 
+                                            <i class="fa fa-times text-danger text"></i></a>
+                                </td>
                             </tr>
-                          
+                           <%}%>
                         </tbody>
                     </table>
                     <div class="row">

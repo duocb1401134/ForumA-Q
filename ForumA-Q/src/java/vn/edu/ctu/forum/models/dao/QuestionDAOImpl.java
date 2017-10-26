@@ -115,7 +115,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
                     + " `question_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            this.get(pre);
+            return this.get(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,9 +125,10 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
 
     @Override
     public ResultSet findByAccect() {
-        String sql = "SELECT * FROM"
-                + " `question` WHERE"
-                + " `question_accept`=0";
+        String sql = "SELECT `question_id`, `subject_id`,"
+                + " `member_id`, `question_name`, `question_decription`,"
+                + " `question_content`, `question_date`, `question_accept`"
+                + " FROM `question` WHERE `question_accept`=0";
         
         return this.get(sql);
     }
@@ -148,14 +149,43 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     @Override
     public boolean editQuestionAccept(int id) {
        try {
-            Question question = new Question();
+            Question question = new Question(id);
             String sql = "UPDATE `question` SET `question_accept`= 1 WHERE `question_id` = ?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return true;
+            return this.edit(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public ResultSet findByidSubject(String id) {
+        try {
+            String sql = "SELECT * FROM"
+                    + " `subject` WHERE"
+                    + " `subject_id`=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, id);
+            return this.get(pre);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean delAcceptQuestion(int id) {
+        try {
+            String sql = "UPDATE `question` SET `question_accept`=2 WHERE `question_id`=?";
+            PreparedStatement pre = this.connection.prepareStatement(sql);
+            pre.setInt(1, id);
+            return this.edit(pre);
+        } catch (SQLException ex) {
+            Logger.getLogger(MemberDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
