@@ -26,18 +26,13 @@ public class BaseDAOImpl implements BaseDAO {
     // Contructor co tham so truyen vao la doi tuong ConnectionPool
     public BaseDAOImpl(ConnectionPool cp) {
         // neu ConnectionPool truyen vao la null thi tao moi
-        if (cp == null) {
-            this.connectionPool = new ConnectionPoolImpl();
-        } else {
-            this.connectionPool = cp;
-        }
-        // Lay ket noi tu ConnectionPool
+        
         try {
             // neu connection pool truyen vao la null thi tao moi
             if (connectionPool == null) {
                 this.connectionPool = new ConnectionPoolImpl();
             } else {
-                this.connectionPool = connectionPool;
+                this.connectionPool = cp;
             }
             // lay ket noi tu connection pool
             this.connection = connectionPool.getConnectionPool();

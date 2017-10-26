@@ -121,6 +121,14 @@ public class Question {
         this.questionDecription = questionDecription;
         this.questionContent = questionContent;
     }
+
+    public Question(String subjectId, Integer memberId, String questionName, String questionDecription, String questionContent) {
+        this.subjectId = subjectId;
+        this.memberId = memberId;
+        this.questionName = questionName;
+        this.questionDecription = questionDecription;
+        this.questionContent = questionContent;
+    }
     
     public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, boolean questionAccept) {
         this.questionId = questionId;

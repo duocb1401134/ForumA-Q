@@ -3,6 +3,10 @@
     Created on : Oct 19, 2017, 9:00:25 PM
     Author     : feng
 --%>
+<%@page import="java.util.List"%>
+<%@page import="vn.edu.ctu.forum.models.service.SubjectServiceImpl"%>
+<%@page import="vn.edu.ctu.forum.models.service.SubjectService"%>
+<%@page import="vn.edu.ctu.forum.models.pojos.Subject"%>
 <a href="template_admin/header.jsp"></a>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  %>
 <%@include file="//template_admin/header.jsp" %>
@@ -20,11 +24,11 @@
                                 Form Elements
                             </header>
                             <div class="panel-body">
-                                <form class="form-horizontal bucket-form" method="get">
+                                <form class="form-horizontal bucket-form"  action="addNewQuestion" method="get">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Name</label>
                                         <div class="col-sm-6">
-                                            <input name="" type="text" class="form-control">
+                                            <input name="questionname" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -32,11 +36,23 @@
                                         <label class="col-sm-3 control-label col-lg-3" for="inputSuccess">Selection Subject</label>
                                         <div class="col-lg-6">                                           
 
-                                            <select class="form-control input-lg m-bot15">
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
+                                            <%                                                
+                                                SubjectService subjectService = new SubjectServiceImpl(null);
+                                                List<Subject> listSubject = subjectService.findAll();
+
+                                            %>
+
+                                            <select name="subject" class="form-control input-lg m-bot15">
+                                                <%                                                        
+                                                    for (Subject s : listSubject) {
+                                                            
+                                                            out.println("<option value=" + s.getSubjectId()+">" + s.getSubjectName() + "</option>");
+                                                    }
+
+                                                %>
+
                                             </select>
+
 
                                         </div>
                                     </div>
@@ -44,7 +60,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Description</label>
                                         <div class="col-sm-6">
-                                            <textarea name="" type="text" class="form-control"></textarea>
+                                            <textarea name="questiondescription" type="text" class="form-control"></textarea>
 
                                         </div>
                                     </div>
@@ -52,7 +68,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Content</label>
                                         <div class="col-sm-6">
-                                            <textarea id="editor1" name="" type="text" class="form-control"></textarea>
+                                            <textarea id="editor1" name="questioncontent" type="text" class="form-control"></textarea>
                                             <script>
 
                                                 var editor = CKEDITOR.replace('editor1');
@@ -64,9 +80,9 @@
 
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-6">
-                                            <button class="btn btn-primary" type="submit">Make Question</button>
+                                            <button class="btn btn-primary" type="submit" >Make Question</button>
                                             <button class="btn btn-success" type="submit">Refresh</button>
-                                            <button class="btn btn-danger" type="submit">Cancel</button>
+                                            <button class="btn btn-danger" type="submit" onclick="#">Cancel</button>
                                         </div>
                                     </div>
 
