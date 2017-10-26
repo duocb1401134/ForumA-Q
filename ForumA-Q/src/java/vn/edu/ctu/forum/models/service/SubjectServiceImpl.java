@@ -15,6 +15,7 @@ import vn.edu.ctu.forum.models.pojos.Subject;
 import vn.edu.ctu.forum.models.untils.ConnectionPool;
 import vn.edu.ctu.forum.models.dao.SubjectDAO;
 import vn.edu.ctu.forum.models.dao.SubjectDAOImpl;
+import vn.edu.ctu.forum.models.pojos.Image;
 
 /**
  *
@@ -22,6 +23,7 @@ import vn.edu.ctu.forum.models.dao.SubjectDAOImpl;
  */
 public class SubjectServiceImpl implements SubjectService {
 
+    
     private final SubjectDAO subjectDAO;
     
     public SubjectServiceImpl(ConnectionPool cp) {
@@ -38,23 +40,45 @@ public class SubjectServiceImpl implements SubjectService {
         this.subjectDAO.releaseConnection();
     }
     
-    public void refreshConnectionPool() {
-        this.subjectDAO.refreshConnectionPool();
+    public void releaseConnectionPool() {
+        this.subjectDAO.releaseConnectionPool();
     }
     
     @Override
-    public boolean addSubject(Subject sj) {
-        return this.subjectDAO.addSubject(sj);
+    public boolean addSubject(Subject sj, Image image) {
+        
+        ImageService imgs = new ImageServiceImpl(null);
+        
+        if (findById(sj.getSubjectId())==null) 
+            if(this.subjectDAO.addSubject(sj, imgs.addGetLastId(image))){
+                return true;
+            }
+            else return false;
+        else
+            return false;
     }
 
+//    public static void main(String[] args) {
+//        SubjectService sjs = new SubjectServiceImpl(null);
+//        Image img = new Image("test", "test");
+//        if(sjs.addSubject(new Subject("sj2", "Test"), img))
+//            System.out.println("OK");
+//        else
+//            System.out.println("Not OK");
+//    }
+    
     @Override
     public boolean edtSubject(Subject sj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.subjectDAO.editSubject(sj);
     }
 
     @Override
-    public boolean delSubject(Subject sj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delSubject(String id) {
+        
+        Subject sb = new Subject("subject_id", "subject_name");
+        
+        
+        return false;
     }
 
     @Override
@@ -77,14 +101,42 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> find(int start, int limit) {
+    public Subject findById(String id) {
+        ResultSet rs = this.subjectDAO.findByID(id);
+        try {
+            while (rs.next()) {
+                Subject sb = new Subject(rs.getString("subject_id"), rs.getString("subject_name"));
+                return sb;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Subject> findLimit(int start, int limit) {
+        ResultSet rs = this.subjectDAO.findByID(start, limit);
+        List<Subject> listSubject = new ArrayList<>();
+        try {
+            while(rs.next()) {
+                Subject sb = new Subject(rs.getString("subject_id"), rs.getString("subject_name"));
+                listSubject.add(sb);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listSubject;
+    }
+
+    @Override
+    public ConnectionPool getConnectionPool() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Subject findById(String id) {
-        ResultSet subject = this.subjectDAO.findByID(id);
-        return  (Subject) subject;
+    public void refreshConnectionPool() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -24,12 +24,13 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
     }
 
     @Override
-    public boolean addSubject(Subject sb) {
+    public boolean addSubject(Subject sb, int image_Id) {
         try {
-            String sql = "INSERT INTO `subject`(`subject_id`, `subject_name`) VALUES (?,?)";
+            String sql = "INSERT INTO `subject`(`subject_id`, `image_id`, `subject_name`) VALUES (?,?,?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, sb.getSubjectId());
-            pre.setString(2, sb.getSubjectName());
+            pre.setInt(2, image_Id);
+            pre.setString(3, sb.getSubjectName());
             return this.add(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -37,6 +38,15 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
         return false;
     }
 
+//    public static void main(String[] args) {
+//        SubjectDAO sjDAO = new SubjectDAOImpl(null);
+//        Subject sj = new Subject("SJ1", "Test");
+//        if(sjDAO.addSubject(sj)) 
+//            System.out.println("OK");
+//        else
+//            System.out.println("fail");
+//    }
+    
     @Override
     public boolean editSubject(Subject sb) {
         try {
@@ -66,41 +76,10 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
 
     @Override
     public ResultSet findAll() {
-        try {
-            String sql = "SELECT * FROM `subject`";
-            PreparedStatement pre = connection.prepareStatement(sql);
-            return this.findAll();
-        } catch (SQLException ex) {
-            Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        String sql = "SELECT * FROM `subject`=?";
+        return this.get(sql);
     }
-
-    @Override
-    public boolean add(PreparedStatement pre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean edit(PreparedStatement pre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean del(PreparedStatement pre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ResultSet get(PreparedStatement pre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ResultSet get(String sql) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public ConnectionPool getConnectionPool() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -112,7 +91,7 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
     }
 
     @Override
-    public void refreshConnectionPool(){
+    public void releaseConnectionPool() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -121,7 +100,22 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
         try {
             String sql = "SELECT `subject_id`, `subject_name` FROM `subject` WHERE `subject_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
-            return this.findByID(id);
+            pre.setString(1, id);
+            return this.get(pre);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public ResultSet findByID(int start, int limit) {
+        try {
+            String sql = "SELECT * FROM `subject` LIMIT ?, ?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, start);
+            pre.setInt(2, limit);
+            return this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

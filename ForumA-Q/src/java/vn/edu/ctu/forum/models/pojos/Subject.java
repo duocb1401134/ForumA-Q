@@ -12,8 +12,10 @@ package vn.edu.ctu.forum.models.pojos;
 public class Subject {
     
     private String subjectId;
+    private int image_id;
     private String subjectName;
-
+    private Image image;
+    
     public Subject(String subjectId, String subjectName) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
@@ -21,6 +23,10 @@ public class Subject {
 
     public Subject(String subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public Subject(Integer subject_id, String subject_name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getSubjectId() {
