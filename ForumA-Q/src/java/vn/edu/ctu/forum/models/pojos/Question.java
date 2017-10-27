@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author Ew 
+ * @author Ew
  */
 public class Question {
     private Integer questionId;
@@ -122,7 +122,7 @@ public class Question {
         this.questionContent = questionContent;
     }
 
-    public Question(String subjectId, Integer memberId, String questionName, String questionDecription, String questionContent) {
+    public Question(String subjectId , Integer memberId, String questionName, String questionDecription, String questionContent) {
         this.subjectId = subjectId;
         this.memberId = memberId;
         this.questionName = questionName;

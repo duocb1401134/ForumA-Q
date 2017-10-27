@@ -83,9 +83,9 @@ public class QuestionServiceImpl implements QuestionService{
                     SubjectService ss = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
-                    Question qt; 
+                    Question qt;
                     qt = new Question(rs.getInt("question_id"),rs.getString("subject_id"),
-                            rs.getInt("member_id") ,rs.getString("question_name"),rs.getString("question_decription"),
+                            rs.getInt("member_id"),rs.getString("question_name"),rs.getString("question_decription"),
                             rs.getString("question_content"),rs.getDate("question_date"),rs.getBoolean("question_accept"));
                     listQuestion.add(qt);
                 } catch (SQLException ex) {
