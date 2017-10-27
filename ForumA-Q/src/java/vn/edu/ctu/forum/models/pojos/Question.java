@@ -130,10 +130,10 @@ public class Question {
         this.questionContent = questionContent;
     }
     
-    public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, boolean questionAccept) {
+    public Question(Integer questionId, String subject, Integer member, String questionName, String questionDecription, String questionContent, Date questionDate, boolean questionAccept) {
         this.questionId = questionId;
-        this.subject = subject;
-        this.member = member;
+        this.subjectId = subject;
+        this.memberId = member;
         this.questionName = questionName;
         this.questionDecription = questionDecription;
         this.questionContent = questionContent;
