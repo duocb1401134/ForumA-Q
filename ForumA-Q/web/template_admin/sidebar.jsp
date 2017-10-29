@@ -39,6 +39,12 @@
                 <%
                 }
                 %>
+                <li>
+                            <a href="my_questions.jsp">
+                                <i class="fa fa-bullhorn"></i>
+                                <span>Question </span>
+                            </a>
+                        </li>
             </ul>            
         </div>
         <!-- sidebar menu end-->

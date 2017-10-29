@@ -27,6 +27,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `aandq`
 --
+CREATE DATABASE `forumaandq`;
+USE `forumaandq`;
 
 CREATE TABLE `aandq` (
   `anwser_id` int(11) NOT NULL,

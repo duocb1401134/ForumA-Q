@@ -8,6 +8,7 @@ package vn.edu.ctu.forum.models.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vn.edu.ctu.forum.models.pojos.Subject;
@@ -74,9 +75,12 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
     @Override
     public ResultSet findAll() {
         try {
+
             String sql = "SELECT * FROM `subject`";
-            PreparedStatement pre = connection.prepareStatement(sql);
-            return this.findAll();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            //PreparedStatement pre = connection.prepareStatement(sql);
+            return resultSet;
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

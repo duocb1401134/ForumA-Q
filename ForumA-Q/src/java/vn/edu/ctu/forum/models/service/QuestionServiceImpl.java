@@ -36,7 +36,7 @@ public class QuestionServiceImpl implements QuestionService{
     
     @Override
     public boolean addQuestion(Question question) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return questionDAO.addQuestion(question);
     }
 
     @Override
@@ -69,7 +69,27 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public List<Question> findByIdMember(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ResultSet rs = this.questionDAO.findById(id);
+        List<Question> listQuestion = new ArrayList<>();
+        try {            
+            while (rs.next()) {
+                try {
+                    MemberService mb = new MemberServiceImpl(this.questionDAO.getConnectionPool());
+                    SubjectService ss = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
+//                    Subject subject = ss.findById(rs.getString("suject_id"));
+                    Member member = mb.findById(rs.getInt("member_id"));
+                    Question qt = new Question(rs.getInt("question_id"),
+                    member,rs.getString("question_name"),rs.getString("question_decription"),
+                    rs.getString("question_content"),rs.getDate("question_date"),rs.getBoolean("question_accept"));
+                    listQuestion.add(qt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listQuestion;
     }
 
     @Override

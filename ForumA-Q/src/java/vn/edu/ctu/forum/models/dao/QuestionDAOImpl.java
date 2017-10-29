@@ -44,6 +44,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
             pre.setString(5, question.getQuestionContent());
 
             this.add(pre);
+            return true;
             //Date and accect chua biet lam sao.
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,7 +113,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
-                    + " `question_id`=?";
+                    + " `member_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
             return this.get(pre);
