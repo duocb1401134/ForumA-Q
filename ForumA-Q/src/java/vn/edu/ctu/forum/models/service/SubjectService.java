@@ -7,7 +7,7 @@ package vn.edu.ctu.forum.models.service;
 
 import java.util.List;
 import vn.edu.ctu.forum.models.pojos.Subject;
-
+import vn.edu.ctu.forum.models.pojos.Image;
 /**
  *
  * @author PC
@@ -15,7 +15,7 @@ import vn.edu.ctu.forum.models.pojos.Subject;
 public interface SubjectService {
     
     //them chu de
-    public boolean addSubject(Subject sj);
+    public boolean addSubject(Subject sj, Image img);
     //sua chu de
     public boolean edtSubject(Subject sj);
     //xoa chu de

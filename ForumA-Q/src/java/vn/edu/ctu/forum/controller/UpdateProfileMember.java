@@ -41,16 +41,19 @@ public class UpdateProfileMember extends HttpServlet {
         String sex = request.getParameter("sex");
         String strDate = request.getParameter("birthday");
         String introduce = request.getParameter("introduce");
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        Member m = new Member(id, name, sex, strDate, introduce);        
+
+        HttpSession httpSession = request.getSession(true);
+        Member memberO = (Member) httpSession.getAttribute("member");
+        int id = memberO.getMemberId();
+
+        Member m = new Member(id, name, sex, strDate, introduce);
         MemberService mbs = new MemberServiceImpl(null);
         if (mbs.editMember(m)) {
-            HttpSession httpSession = request.getSession();
             httpSession.removeAttribute("member");
             MemberService mbs1 = new MemberServiceImpl(null);
             httpSession.setAttribute("member", mbs1.findById(id));
             response.sendRedirect("profileMember.jsp");
-        } else {            
+        } else {
             response.sendRedirect("profileMember.jsp");
         }
 

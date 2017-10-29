@@ -31,7 +31,7 @@ import vn.edu.ctu.forum.models.service.MemberServiceImpl;
  * @author NTD
  */
 @WebServlet(name = "UploadAvatarMember", urlPatterns = {"/uploadAvatarMember"})
-@MultipartConfig
+@MultipartConfig()
 public class UploadAvatarMember extends HttpServlet {
 
     /**
@@ -53,78 +53,55 @@ public class UploadAvatarMember extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        // checks if the request actually contains upload file
+
         if (!ServletFileUpload.isMultipartContent(request)) {
-            // if not, we stop here
+
             PrintWriter writer = response.getWriter();
             writer.println("Error: Form must has enctype=multipart/form-data.");
             writer.flush();
             return;
         }
-
-        // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
-        // sets memory threshold - beyond which files are stored in disk
         factory.setSizeThreshold(MEMORY_THRESHOLD);
-        // sets temporary location to store files
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-
         ServletFileUpload upload = new ServletFileUpload(factory);
-
-        // sets maximum size of upload file
         upload.setFileSizeMax(MAX_FILE_SIZE);
-
-        // sets maximum size of request (include file + form data)
         upload.setSizeMax(MAX_REQUEST_SIZE);
-
-        // constructs the directory path to store upload file
-        // this path is relative to application's directory
-        String uploadPath = getServletContext().getRealPath("")
-                + File.separator + UPLOAD_DIRECTORY;
-
-        // creates the directory if it does not exist
+        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
         try {
-            // parses the request's content to extract file data
             @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
-
             if (formItems != null && formItems.size() > 0) {
-                // iterates over form's fields
+                String alt = null, src = null;
                 for (FileItem item : formItems) {
-                    // processes only fields that are not form fields
                     if (!item.isFormField()) {
                         String fileName = new File(item.getName()).getName();
                         String filePath = uploadPath + File.separator + fileName;
                         File storeFile = new File(filePath);
-
-                        // saves the file on disk
                         item.write(storeFile);
-                        HttpSession httpSession = request.getSession(true);
-                        Member memberO = (Member)httpSession.getAttribute("member");                       
-                        int id = memberO.getMemberId();
-                        String alt = "anh dai dien cua thanh vien " + id;                       
-                        String src = UPLOAD_DIRECTORY + "/" + fileName;
-                        MemberService member = new MemberServiceImpl(null);
-                        Image image = new Image(alt, src);
-
-                        if (member.updateAvatar(id, image)) {
-                            request.setAttribute("success", "Cập nhật thành công");
-                        } else {
-                            request.setAttribute("error", "Cập nhật Thất Bại!");
-                        }                       
+                        alt = "anh dai dien cua thanh vien ";
+                        src = UPLOAD_DIRECTORY + "/" + fileName;
                     }
+                }
+                HttpSession httpSession = request.getSession(true);
+                Member memberO = (Member) httpSession.getAttribute("member");
+                int id = memberO.getMemberId();
+                MemberService member = new MemberServiceImpl(null);
+                Image image = new Image(alt, src);
+                if (member.updateAvatar(id, image)) {
+                    request.setAttribute("success", "Cập nhật thành công");
+                } else {
+                    request.setAttribute("error", "Cập nhật Thất Bại!");
                 }
             }
         } catch (Exception ex) {
             request.setAttribute("error", "There was an error: " + ex.getMessage());
         }
-        // redirects client to message page
         getServletContext().getRequestDispatcher("/updateAvatarMember.jsp").forward(request, response);
     }
 

@@ -26,17 +26,24 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
     @Override
     public boolean addSubject(Subject sb) {
         try {
-            String sql = "INSERT INTO `subject`(`subject_id`, `subject_name`) VALUES (?,?)";
+            String sql = "INSERT INTO `subject`(`subject_id`, `image_id`, `subject_name`) VALUES (?,?,?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, sb.getSubjectId());
-            pre.setString(2, sb.getSubjectName());
+            pre.setInt(2, sb.getImageId());
+            pre.setString(3, sb.getSubjectName());
             return this.add(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-
+//    public static void main(String[] args) {
+//        SubjectDAO sjDAO = new SubjectDAOImpl(null);
+//        Subject sb = new Subject("test", "test", 6);
+//        if(sjDAO.addSubject(sb)){
+//            System.out.println("oke");
+//        }else System.out.println("out");
+//    }
     @Override
     public boolean editSubject(Subject sb) {
         try {
@@ -76,23 +83,23 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
         return null;
     }
 
-    public static void main(String[] args) throws SQLException {
-        SubjectDAO m = new SubjectDAOImpl(null);
-        
-        ResultSet rs = m.findByID("2");
-        
-        if (rs!=null) {
-            
-            System.out.println(rs.getString("subject_id"));
-        } else {
-            System.out.println("none");
-        }
-                }
+//    public static void main(String[] args) throws SQLException {
+//        SubjectDAO m = new SubjectDAOImpl(null);
+//
+//        ResultSet rs = m.findByID("2");
+//
+//        if (rs != null) {
+//
+//            System.out.println(rs.getString("subject_id"));
+//        } else {
+//            System.out.println("none");
+//        }
+//    }
     
     @Override
     public ResultSet findByID(String id) {
         try {
-            String sql = "SELECT `subject_id`, `subject_name` FROM `subject` WHERE `subject_id`=?";
+            String sql = "SELECT * FROM `subject` WHERE `subject_id`=?";
             PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setString(1,id);
             return this.get(pre);
@@ -100,8 +107,5 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-   
-        
-    
+    } 
 }

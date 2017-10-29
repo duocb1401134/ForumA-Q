@@ -43,7 +43,6 @@
                                             <input type="text" name="name" class="form-control" value="<%=member.getMemberName()%>">
                                         </div>
                                     </div>
-                                    <input type="hidden" name="id" value="<%=member.getMemberId()%>">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Giới tính</label>
                                         <div class="radio col-sm-6">

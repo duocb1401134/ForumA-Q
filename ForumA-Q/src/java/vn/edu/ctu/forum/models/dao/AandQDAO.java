@@ -6,7 +6,6 @@
 package vn.edu.ctu.forum.models.dao;
 
 import java.sql.ResultSet;
-import vn.edu.ctu.forum.models.pojos.AandQ;
 
 /**
  *

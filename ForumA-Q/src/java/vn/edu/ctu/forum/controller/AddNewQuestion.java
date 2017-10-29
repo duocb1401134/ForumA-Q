@@ -7,7 +7,6 @@ package vn.edu.ctu.forum.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,11 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import vn.edu.ctu.forum.models.pojos.Member;
 import vn.edu.ctu.forum.models.pojos.Question;
-import vn.edu.ctu.forum.models.pojos.Subject;
 import vn.edu.ctu.forum.models.service.QuestionService;
 import vn.edu.ctu.forum.models.service.QuestionServiceImpl;
-import vn.edu.ctu.forum.models.service.SubjectService;
-import vn.edu.ctu.forum.models.service.SubjectServiceImpl;
 
 /**
  *

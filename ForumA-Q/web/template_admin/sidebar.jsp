@@ -33,7 +33,7 @@
                     <ul class="sub">
                         <li><a href="acceptmember.jsp">Accept member</a></li>
                         <li><a href="acceptquestion.jsp">Accept question</a></li>
-                        <li><a href="#">Add subject</a></li>
+                        <li><a href="add_subject.jsp">Add subject</a></li>
                     </ul>
                 </li>                
                 <%

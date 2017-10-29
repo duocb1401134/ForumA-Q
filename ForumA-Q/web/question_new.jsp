@@ -21,7 +21,7 @@
                     <div class="col-lg-12">
                         <section class="panel">
                             <header class="panel-heading">
-                                Form Elements
+                                Add new Question
                             </header>
                             <div class="panel-body">
                                 <form class="form-horizontal bucket-form"  action="addNewQuestion" method="get">
@@ -36,19 +36,15 @@
                                         <label class="col-sm-3 control-label col-lg-3" for="inputSuccess">Selection Subject</label>
                                         <div class="col-lg-6">                                           
 
-                                            <%                                                
-                                                SubjectService subjectService = new SubjectServiceImpl(null);
+                                            <%                                                SubjectService subjectService = new SubjectServiceImpl(null);
                                                 List<Subject> listSubject = subjectService.findAll();
 
                                             %>
 
                                             <select name="subject" class="form-control input-lg m-bot15">
-                                                <%                                                        
-                                                    for (Subject s : listSubject) {
-                                                            
-                                                            out.println("<option value=" + s.getSubjectId()+">" + s.getSubjectName() + "</option>");
+                                                <%for (Subject s : listSubject) {
+                                                    out.println("<option value=" + s.getSubjectId() + ">" + s.getSubjectName() + "</option>");
                                                     }
-
                                                 %>
 
                                             </select>

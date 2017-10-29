@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vn.edu.ctu.forum.models.pojos.AandQ;
 import vn.edu.ctu.forum.models.untils.ConnectionPool;
 
 /**

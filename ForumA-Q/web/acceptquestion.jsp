@@ -39,10 +39,10 @@
                         <tbody>
                              <% for(int i = 0; i < list1.size() ; i++){ %>
                             <tr data-expanded="true">
-                                <td><%=list1.get(i).getQuestionId()%></td>
-                                <td><%=list1.get(i).getSubjectId() %></td>
-                                <td><%=list1.get(i).getMemberId()  %></td>
                                 <td><%=list1.get(i).getQuestionId() %></td>
+                                <td></td>
+                                <td><%=list1.get(i).getMemberId()  %></td>
+                                <td><%=list1.get(i).getQuestionId()  %></td>
                                 <td><%= list1.get(i).getQuestionDecription()  %></td>
                                 <td><%= list1.get(i).getQuestionDate()  %></td>
                                 <td><%= list1.get(i).getQuestionContent()  %></td>

@@ -16,13 +16,13 @@
                 <%=request.getAttribute("success")%>
             </div>
             <%}
-                                            if (request.getAttribute("error") != null) {%>
+                if (request.getAttribute("error") != null) {%>
             <div class="alert alert-danger" role="alert">
                 <%=request.getAttribute("error")%>
             </div>
             <%}%>
             <form action="uploadAvatarMember" method="POST" enctype = "multipart/form-data">
-                                
+                <input type="text" name="id" value="<%=member.getMemberId()%>">           
                 <div class="well" data-bind="fileDrag: fileData">
                     <div class="form-group row">
                         <div class="col-md-6">
