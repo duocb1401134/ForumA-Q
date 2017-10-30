@@ -24,7 +24,7 @@ public interface QuestionService extends BaseService{
     //Lay toan bo danh sach
     public List<Question> findAll();
     //Lay theo Id
-    public Question findById(int id);
+    public Question findByIdQuestion(int id);
     
     public List<Question> findByIdMember(int id);
     //Lay Question chua 

@@ -42,7 +42,7 @@
                                 <td><%= list1.get(i).getQuestionDate()%></td>
 
                                 <td>
-                                    <a href="delAcceptQuestion?id=<%=list1.get(i).getQuestionId()%>" class="active" ui-toggle-class=""> 
+                                    <a href="edit_question?id=<%=list1.get(i).getQuestionId()%>" class="active" ui-toggle-class=""> 
                                         <i class="fa fa-pencil-square-o"></i></a>
                                 </td>
                             </tr>

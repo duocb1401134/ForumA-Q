@@ -26,7 +26,7 @@ public interface QuestionDAO extends BaseDAO {
     //Lay toan bo danh sach
     public ResultSet findAll();
     //Lay theo Id
-    public ResultSet findById(int id);
+    public ResultSet findByIdMember(int id);
     
     public ResultSet findByIdQuestion(int id);
     //Lay Question chua 

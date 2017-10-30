@@ -72,6 +72,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
             
             
             this.edit(pre);
+            return true;
             //Date and accect chua biet lam sao.
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +110,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     }
 
     @Override
-    public ResultSet findById(int id) {
+    public ResultSet findByIdMember(int id) {
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
@@ -134,17 +135,18 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         return this.get(sql);
     }
     public ResultSet findByIdQuestion(int id) {
-        String sql = "SELECT * FROM"
-                + " `question` WHERE"
-                + " `member_id`=?";
         try {
+            String sql = "SELECT * FROM"
+                    + " `question` WHERE"
+                    + " `question_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
             return this.get(pre);
+
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return null;
+        return null;
     }
 
     @Override

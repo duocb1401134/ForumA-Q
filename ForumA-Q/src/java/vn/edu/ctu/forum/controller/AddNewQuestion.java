@@ -48,21 +48,24 @@ public class AddNewQuestion extends HttpServlet {
             Integer memberid = ((Member) session.getAttribute("member")).getMemberId();
             String questionname = request.getParameter("questionname");
             String questiondecription = request.getParameter("questiondescription");
-            String questioncontent = request.getParameter("questioncontent");          
-            
+            String questioncontent = request.getParameter("questioncontent");
+
             QuestionService questionService = new QuestionServiceImpl(null);
 
             try {
 
-                if ((questionname != null) && (questiondecription != null) && (questioncontent != null)) {
+               
+                if ((!questionname.equals("")) && (!questiondecription.equals("")) && (!questioncontent.equals(""))) {
                     Question question = new Question(subjectid, memberid, questionname, questiondecription, questioncontent);
                     if (questionService.addQuestion(question)) {
                         request.setAttribute("success", "Cập nhật thành công");
                     } else {
                         request.setAttribute("error", "Cập nhật Thất Bại!");
                     }
+                    
                 } else {
                     request.setAttribute("error", "Value is null");
+
                 }
             } catch (Exception ex) {
                 request.setAttribute("error", "There was an error: " + ex.getMessage());
@@ -71,47 +74,43 @@ public class AddNewQuestion extends HttpServlet {
         }
     }
 
-        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-        /**
-         * Handles the HTTP <code>GET</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doGet
-        (HttpServletRequest request, HttpServletResponse response)
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
-        }
-
-        /**
-         * Handles the HTTP <code>POST</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doPost
-        (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            processRequest(request, response);
-        }
-
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
-        @Override
-        public String getServletInfo
-        
-            () {
-        return "Short description";
-        }// </editor-fold>
-
+        processRequest(request, response);
     }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
