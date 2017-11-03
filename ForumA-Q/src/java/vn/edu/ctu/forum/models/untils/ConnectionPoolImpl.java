@@ -44,7 +44,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     @Override
-    public Connection getConnectionPool() throws SQLException {
+    public Connection getConnection() throws SQLException {
         if(pool.empty()){
             return DriverManager.getConnection(this.url,this.dbUser,this.dbPass);
         }else{

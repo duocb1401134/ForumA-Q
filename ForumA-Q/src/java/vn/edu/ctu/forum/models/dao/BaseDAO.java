@@ -7,12 +7,13 @@ package vn.edu.ctu.forum.models.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import vn.edu.ctu.forum.models.untils.ConnectionPool;
 
 /**
  *
  * @author NTD
  */
-public interface BaseDAO extends ShareConnectionManager{
+public interface BaseDAO{
     
     //phuong thuc them moi su dung PreparedStatement
     public boolean add(PreparedStatement pre);
@@ -26,4 +27,11 @@ public interface BaseDAO extends ShareConnectionManager{
     public ResultSet get(String sql);
     //add get last id
     public Integer addGetLastID(PreparedStatement pre);
+    
+    //lay bo ket noi
+    public ConnectionPool getConnectionPool();
+    //kiem tra va tra lai ket noi
+    public void releaseConnection();
+    //lam moi connection pool
+    public void refreshConnectionPool();
 }

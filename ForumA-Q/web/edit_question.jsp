@@ -70,15 +70,17 @@
                                         <label class="col-sm-3 control-label col-lg-3" for="inputSuccess">Selection Subject</label>
                                         <div class="col-lg-6">                                           
 
-                                            <%                                                SubjectService subjectService = new SubjectServiceImpl(null);
+                                            <%   
+                                                
+                                                SubjectService subjectService = new SubjectServiceImpl(null);
                                                 List<Subject> listSubject = subjectService.findAll();
 
                                             %>
 
                                             <select name="subject" class="form-control input-lg m-bot15">
-                                                <%for (Subject s : listSubject) {
-                                                        if ((s.getSubjectId()) == (((Question) request.getAttribute("question")).getSubjectId())) {
-                                                            out.println("<option  selected=" + "selected" + "value=" + s.getSubjectId() + ">" + s.getSubjectName() + "</option>");
+                                                <%for (Subject s : listSubject) {                       
+                                                        if ((s.getSubjectId()).equals(((Question) request.getAttribute("question")).getSubjectId())) {
+                                                            out.println("<option  selected=\"selected\" value=" + s.getSubjectId() + ">" + s.getSubjectName() + "</option>");
                                                         } else {
                                                             out.println("<option value=" + s.getSubjectId() + ">" + s.getSubjectName() + "</option>");
                                                         }
@@ -122,7 +124,13 @@
 
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-6">
-                                            <button class="btn btn-primary" type="submit" >Edit Question</button>
+                                            <button class="btn btn-primary" type="submit" >Save</button>
+                                            <a href="delQuestion?id=<%=((Question)request.getAttribute("question")).getQuestionId()%>"  class="btn btn-danger">
+                                                Delete
+                                            </a>
+                                             <a href="my_questions.jsp"  class="btn btn-warning">
+                                                Cancel
+                                            </a>
 
                                         </div>
                                     </div>

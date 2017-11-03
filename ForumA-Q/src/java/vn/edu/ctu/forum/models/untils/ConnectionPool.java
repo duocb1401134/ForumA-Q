@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public interface ConnectionPool {
     
 //    trả về kết nối
-    public Connection getConnectionPool()throws SQLException;
+    public Connection getConnection()throws SQLException;
 //    lấy lại kết nối đã kết nối trước đó   
     public void releaseConnection(Connection conn) throws SQLException;
 //    làm mới lại kết nối

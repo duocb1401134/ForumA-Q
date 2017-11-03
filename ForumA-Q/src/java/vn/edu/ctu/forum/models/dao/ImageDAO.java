@@ -19,4 +19,6 @@ public interface ImageDAO extends BaseDAO{
     public ResultSet findById(int id);
     //get Last id
     public Integer getLastID(Image img);
+    
+    
 }

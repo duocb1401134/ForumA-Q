@@ -33,7 +33,6 @@
     <script src="<%=request.getContextPath()%>/ckeditor/ckeditor.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/ckfinder/ckfinder.js" type="text/javascript"></script>
     <script src="js/jquery2.0.3.min.js"></script>
-
     <script src="./ckeditor/ckeditor.js" type="text/javascript"></script>
     <!-- date picker -->
     <link href="css_admin/datepicker.css" rel="stylesheet" type="text/css"/>    
@@ -44,6 +43,17 @@
         });
     </script>
     <!--//date picker -->
+    <!--//Khai bao validate cho form new question -->
+    <script src="../js_admin/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="../js_admin/jquery.validate.js" type="text/javascript"></script>
+    <script src="../js_admin/scripts.js" type="text/javascript"></script>
+    <script>
+        addEventListener('load', prettyPrint, false);
+        $(document).ready(function () {
+            $('pre').addClass('prettyprint linenums');
+        });
+    </script> 
+    <!--//Khai bao validate cho form new question -->
 </head>
 <body>
     <section id="container">
@@ -65,7 +75,7 @@
                         Member member = (Member) request.getSession().getAttribute("member");
                         ImageServiceImpl imageService = new ImageServiceImpl(null);
                         Image image = imageService.findByIdMember(member.getMemberId());
-                        
+
                     %>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">

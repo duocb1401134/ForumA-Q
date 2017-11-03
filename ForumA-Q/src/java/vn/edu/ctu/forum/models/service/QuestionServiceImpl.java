@@ -24,16 +24,16 @@ import vn.edu.ctu.forum.models.untils.ConnectionPool;
  *
  * @author Administrator
  */
-public class QuestionServiceImpl implements QuestionService{
+public class QuestionServiceImpl implements QuestionService {
 
     private SubjectService subjectService;
     private MemberService memberService;
-    private final  QuestionDAO questionDAO;
+    private final QuestionDAO questionDAO;
+
     public QuestionServiceImpl(ConnectionPool cp) {
-          this.questionDAO = new QuestionDAOImpl(cp);
+        this.questionDAO = new QuestionDAOImpl(cp);
     }
-    
-    
+
     @Override
     public boolean addQuestion(Question question) {
         return questionDAO.addQuestion(question);
@@ -53,7 +53,8 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public boolean delQuetion(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean rs = questionDAO.delQuetion(id);
+        return rs;
     }
 
     @Override
@@ -63,20 +64,20 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Question findByIdQuestion(int id) {
-        
-        ResultSet rs = this.questionDAO.findByIdQuestion(id);  
-        Question qt = new Question(id);
-        try {            
+
+        ResultSet rs = this.questionDAO.findByIdQuestion(id);
+        Question qt = new Question();
+        try {
             while (rs.next()) {
                 try {
                     MemberService mb = new MemberServiceImpl(this.questionDAO.getConnectionPool());
                     SubjectService ss = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
-//                    Subject subject = ss.findById(rs.getString("suject_id"));
+//                    Subject subject = ss.findById(rs.getString("subject_id")); ham nay bi loi 
                     Member member = mb.findById(rs.getInt("member_id"));
-                    qt = new Question(rs.getInt("question_id"),
-                    member,rs.getString("question_name"),rs.getString("question_decription"),
-                    rs.getString("question_content"),rs.getDate("question_date"),rs.getBoolean("question_accept"));
-                    
+                    qt = new Question(rs.getInt("question_id"),rs.getString("subject_id"),
+                            rs.getString("question_name"), rs.getString("question_decription"),
+                            rs.getString("question_content"), rs.getDate("question_date"), rs.getInt("question_accept"));
+//                    qt.setSubjectId(rs.getString("suject_id"));
                 } catch (SQLException ex) {
                     Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -84,6 +85,7 @@ public class QuestionServiceImpl implements QuestionService{
         } catch (SQLException ex) {
             Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return qt;
     }
 
@@ -91,7 +93,7 @@ public class QuestionServiceImpl implements QuestionService{
     public List<Question> findByIdMember(int id) {
         ResultSet rs = this.questionDAO.findByIdMember(id);
         List<Question> listQuestion = new ArrayList<>();
-        try {            
+        try {
             while (rs.next()) {
                 try {
                     MemberService mb = new MemberServiceImpl(this.questionDAO.getConnectionPool());
@@ -99,8 +101,8 @@ public class QuestionServiceImpl implements QuestionService{
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
                     Question qt = new Question(rs.getInt("question_id"),
-                    member,rs.getString("question_name"),rs.getString("question_decription"),
-                    rs.getString("question_content"),rs.getDate("question_date"),rs.getBoolean("question_accept"));
+                            member, rs.getString("question_name"), rs.getString("question_decription"),
+                            rs.getString("question_content"), rs.getDate("question_date"), rs.getInt("question_accept"));
                     listQuestion.add(qt);
                 } catch (SQLException ex) {
                     Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +118,7 @@ public class QuestionServiceImpl implements QuestionService{
     public List<Question> findByAccect() {
         ResultSet rs = this.questionDAO.findByAccect();
         List<Question> listQuestion = new ArrayList<>();
-        try {            
+        try {
             while (rs.next()) {
                 try {
                     MemberService mb = new MemberServiceImpl(this.questionDAO.getConnectionPool());
@@ -124,8 +126,8 @@ public class QuestionServiceImpl implements QuestionService{
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
                     Question qt = new Question(rs.getInt("question_id"),
-                    member,rs.getString("question_name"),rs.getString("question_decription"),
-                    rs.getString("question_content"),rs.getDate("question_date"),rs.getBoolean("question_accept"));
+                            member, rs.getString("question_name"), rs.getString("question_decription"),
+                            rs.getString("question_content"), rs.getDate("question_date"), rs.getInt("question_accept"));
                     listQuestion.add(qt);
                 } catch (SQLException ex) {
                     Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,13 +146,12 @@ public class QuestionServiceImpl implements QuestionService{
 //        for(int i = 0; i< list.size();i++){
 //            System.out.println(list.get(i).getQuestionName());
 //    }}
-    
+
 //    public static void main(String[] args) {
 //        SubjectService sb = new SubjectServiceImpl(null);
 //       Subject s =  sb.findById("2");
 //        System.out.println(s.getSubjectName());
 //    }
-    
     @Override
     public ConnectionPool getConnectionPool() {
         return this.questionDAO.getConnectionPool();
@@ -173,9 +174,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public boolean delAcceptQuestion(int id) {
-         boolean rs = questionDAO.delAcceptQuestion(id);
+        boolean rs = questionDAO.delAcceptQuestion(id);
         Question q = new Question(id);
         return rs;
     }
-    
+
 }

@@ -7,6 +7,7 @@ package vn.edu.ctu.forum.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,26 +52,34 @@ public class AddNewQuestion extends HttpServlet {
             String questioncontent = request.getParameter("questioncontent");
 
             QuestionService questionService = new QuestionServiceImpl(null);
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("new_question.jsp");
 
             try {
-
+                
                
                 if ((!questionname.equals("")) && (!questiondecription.equals("")) && (!questioncontent.equals(""))) {
                     Question question = new Question(subjectid, memberid, questionname, questiondecription, questioncontent);
+//                    dispatcher = request.getRequestDispatcher("my_questions.jsp");
                     if (questionService.addQuestion(question)) {
-                        request.setAttribute("success", "Cập nhật thành công");
+                        
+                        response.sendRedirect("my_questions.jsp?kqaction=1");
+//                        request.setAttribute("success", "Has created a question");
                     } else {
-                        request.setAttribute("error", "Cập nhật Thất Bại!");
+                        response.sendRedirect("my_questions.jsp?kqaction=2");
+//                        request.setAttribute("error", "Make question failed!");
                     }
                     
                 } else {
-                    request.setAttribute("error", "Value is null");
+//                    request.setAttribute("error", "Value is null");
+                    response.sendRedirect("new_question.jsp?error=0");
+//                    dispatcher = request.getRequestDispatcher("new_question.jsp");
 
                 }
             } catch (Exception ex) {
                 request.setAttribute("error", "There was an error: " + ex.getMessage());
             }
-            getServletContext().getRequestDispatcher("/new_question.jsp").forward(request, response);
+            //dispatcher.forward(request, response);
         }
     }
 

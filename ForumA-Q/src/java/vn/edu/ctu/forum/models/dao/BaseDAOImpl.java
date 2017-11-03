@@ -25,27 +25,25 @@ public class BaseDAOImpl implements BaseDAO {
 
     // Contructor co tham so truyen vao la doi tuong ConnectionPool
     public BaseDAOImpl(ConnectionPool cp) {
-        // neu ConnectionPool truyen vao la null thi tao moi
         
+// neu connection pool truyen vao la null thi tao moi
+        if (connectionPool == null) {
+            this.connectionPool = new ConnectionPoolImpl();
+        } else {
+            this.connectionPool = cp;
+        }
         try {
-            // neu connection pool truyen vao la null thi tao moi
-            if (connectionPool == null) {
-                this.connectionPool = new ConnectionPoolImpl();
-            } else {
-                this.connectionPool = cp;
-            }
-            // lay ket noi tu connection pool
-            this.connection = connectionPool.getConnectionPool();
-
+            this.connection = connectionPool.getConnection();
             // Set AutoCommit la false de thuc hien commit bang tay
             if (this.connection.getAutoCommit()) {
                 this.connection.setAutoCommit(false);
             }
         } catch (SQLException e) {
+           
         }
-
     }
 
+    
     public boolean executeUpdate(PreparedStatement pre) {
         if (pre != null) {
             try {
