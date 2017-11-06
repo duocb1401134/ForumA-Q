@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,14 +39,25 @@ public class Login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
+        String rememberMe = request.getParameter("rememberMe");
+
         MemberService mbs = new MemberServiceImpl(null);
         Member m = mbs.login(email, pass);
         if (m != null) {
             HttpSession session = request.getSession();
             session.setAttribute("member", m);
+            if (rememberMe != null) {
+                Cookie cEmail = new Cookie("memberEmail", email);
+                cEmail.setMaxAge(60*60*24*7);
+                response.addCookie(cEmail);
+                
+                Cookie cPass = new Cookie("memberPass", pass);
+                cPass.setMaxAge(60*60*24*7);
+                response.addCookie(cPass);
+            }
             response.sendRedirect("index.jsp");
         } else {
-            request.setAttribute("erros","Email or PassWord incorrect");
+            request.setAttribute("erros", "Email or PassWord incorrect");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
         }

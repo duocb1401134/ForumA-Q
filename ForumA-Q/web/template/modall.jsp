@@ -18,16 +18,22 @@
                     <h3 class="agileinfo_sign">Sign In</h3>                    
                     <%
                         if (request.getAttribute("erros") != null) {
-                            %>
+                    %>
                     <div class="alert alert-danger">
                         <%= request.getAttribute("erros")%>
                     </div>
-                    <%}                    
+                    <%}
                     %>
                     <div class="login-form">
                         <form action="login" method="post">                            
                             <input type="email" name="email" placeholder="E-mail" required="true">
                             <input type="password" name="password" placeholder="Password" required="true">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="rememberMe">
+                                    Remember me!
+                                </label>
+                            </div>
                             <div class="">
                                 <input type="submit" value="Sign In">
                             </div>
@@ -58,11 +64,11 @@
                     <h3 class="agileinfo_sign">Sign Up</h3>
                     <%
                         if (request.getAttribute("erros_register") != null) {
-                            %>
+                    %>
                     <div class="alert alert-danger">
                         <%= request.getAttribute("erros_register")%>
                     </div>
-                    <%}                    
+                    <%}
                     %>
                     <div class="login-form">
                         <form action="register" method="post">

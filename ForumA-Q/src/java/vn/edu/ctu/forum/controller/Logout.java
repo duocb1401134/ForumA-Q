@@ -8,6 +8,7 @@ package vn.edu.ctu.forum.controller;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +35,22 @@ public class Logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession httpSession = request.getSession();
         httpSession.removeAttribute("member");
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie ck : cookies) {
+                if ("memberEmail".equals(ck.getName())) {
+                    ck.setMaxAge(0);
+                    response.addCookie(ck);
+                }
+                if ("memberPass".equals(ck.getName())) {
+                    ck.setMaxAge(0);
+                    response.addCookie(ck);
+                }
+            }
+        }
         response.sendRedirect("index.jsp");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

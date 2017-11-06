@@ -33,14 +33,14 @@
                                             Integer id = Integer.parseInt(request.getParameter("id"));
                                             Question q = new Question(id);
                                             QuestionService qs = new QuestionServiceImpl(null);
-                                            q = qs.findByIdQuestion(id);
+                                            q = qs.findById(id);
                                             qs.releaseConnection();
                                             request.setAttribute("question", q);
                                         } catch (Exception e) {
                                             Integer id = (Integer) request.getAttribute("id");
                                             Question q = new Question(id);
                                             QuestionService qs = new QuestionServiceImpl(null);
-                                            q = qs.findByIdQuestion(id);
+                                            q = qs.findById(id);
                                             qs.releaseConnection();
                                             request.setAttribute("question", q);
                                         }
