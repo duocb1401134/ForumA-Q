@@ -37,9 +37,8 @@ public class DelQuestion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Integer id = Integer.parseInt(request.getParameter("id"));
         Question mb = new Question(id);
-        QuestionService mbs = new QuestionServiceImpl(null);
+        QuestionService mbs = new QuestionServiceImpl();
         if (mbs.delQuetion(id)) {
-           mbs.releaseConnection();
            response.sendRedirect("my_questions.jsp?kqaction=3");
             //request.setAttribute("success", "Successfully deleted");
 

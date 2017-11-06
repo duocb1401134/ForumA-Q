@@ -29,8 +29,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectDAO subjectDAO;
 
-    public SubjectServiceImpl(ConnectionPool cp) {
-        this.subjectDAO = new SubjectDAOImpl(cp);
+    public SubjectServiceImpl() {
+        this.subjectDAO = new SubjectDAOImpl();
     }
 
     public ConnectionPool getConnection() {
@@ -48,7 +48,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public boolean addSubject(Subject sj, Image img) {
         if (findById(sj.getSubjectId()) == null) {
-           ImageService imageService = new ImageServiceImpl(this.getConnection());
+           ImageService imageService = new ImageServiceImpl();
            int imageId = imageService.addGetLastId(img); 
            if (imageId>0) {
                 Subject sb = new Subject(sj.getSubjectId(), sj.getSubjectName(), imageId);
@@ -118,7 +118,7 @@ public class SubjectServiceImpl implements SubjectService {
             if (rs.next()) {
                 String subject_id = rs.getString("subject_id");
                 String subject_name = rs.getString("subject_name");
-                ImageService imageService = new ImageServiceImpl(this.getConnection());
+                ImageService imageService = new ImageServiceImpl();
                 Image image = imageService.findById(rs.getInt("image_id"));
                 b = new Subject(subject_id, subject_name, image);
                 return b;

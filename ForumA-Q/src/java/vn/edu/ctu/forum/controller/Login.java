@@ -41,8 +41,9 @@ public class Login extends HttpServlet {
         String pass = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
 
-        MemberService mbs = new MemberServiceImpl(null);
+        MemberService mbs = new MemberServiceImpl();
         Member m = mbs.login(email, pass);
+        System.out.println("Con text bach: " + request.getRequestURI());
         if (m != null) {
             HttpSession session = request.getSession();
             session.setAttribute("member", m);
@@ -55,6 +56,8 @@ public class Login extends HttpServlet {
                 cPass.setMaxAge(60*60*24*7);
                 response.addCookie(cPass);
             }
+            
+            request.getContextPath();
             response.sendRedirect("index.jsp");
         } else {
             request.setAttribute("erros", "Email or PassWord incorrect");

@@ -25,8 +25,8 @@ public class AnwserServiceImpl implements AnwserService{
 
     private final AnwserDAO answerDAO;
 
-    public AnwserServiceImpl(ConnectionPool cp) {
-        this.answerDAO = new AnwserDAOImpl(cp);
+    public AnwserServiceImpl() {
+        this.answerDAO = new AnwserDAOImpl();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AnwserServiceImpl implements AnwserService{
                     int memberId = rs.getInt("member_id");
                     String answerContent = rs.getString("anwser_content");
                     Date dateUpdate = rs.getDate("anwser_date");
-                    MemberService memberService = new MemberServiceImpl(this.answerDAO.getConnectionPool());
+                    MemberService memberService = new MemberServiceImpl();
                     Member m = memberService.findById(memberId);
                     Answer a = new Answer(answerId,questionId,answerContent,dateUpdate,m);
                     list.add(a);
@@ -55,7 +55,6 @@ public class AnwserServiceImpl implements AnwserService{
                 Logger.getLogger(AnwserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        releaseConnection();
         return list;
     }
     
@@ -71,6 +70,7 @@ public class AnwserServiceImpl implements AnwserService{
     @Override
     public ConnectionPool getConnectionPool() {
       return this.answerDAO.getConnectionPool();
+      
     }
 
     @Override

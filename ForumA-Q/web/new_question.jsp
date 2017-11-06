@@ -42,7 +42,7 @@
                                         <label class="col-sm-3 control-label col-lg-3" for="inputSuccess">Selection Subject</label>
                                         <div class="col-lg-6">                                           
 
-                                            <%                                                SubjectService subjectService = new SubjectServiceImpl(null);
+                                            <%                                                SubjectService subjectService = new SubjectServiceImpl();
                                                 List<Subject> listSubject = subjectService.findAll();
 
                                             %>
@@ -70,7 +70,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Content</label>
                                         <div class="col-sm-6">
-                                            <textarea id="editor1" name="questioncontent" type="text" class="form-control"  required></textarea>
+                                            <textarea id="editor1" name="questioncontent" type="text" class="form-control"  required="true"></textarea>
                                             <script>
 
                                                 var editor = CKEDITOR.replace('editor1',

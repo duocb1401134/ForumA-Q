@@ -20,7 +20,7 @@
                 </div>
                 <div>
                     <% 
-                        MemberServiceImpl memberservice = new MemberServiceImpl(null);
+                        MemberServiceImpl memberservice = new MemberServiceImpl();
                         List<Member> list =  memberservice.findAcceptMember();
                         
                         %>

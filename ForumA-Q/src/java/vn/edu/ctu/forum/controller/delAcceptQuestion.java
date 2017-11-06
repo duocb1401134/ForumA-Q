@@ -36,9 +36,8 @@ public class delAcceptQuestion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Integer id = Integer.parseInt(request.getParameter("id"));
        Question mb = new Question(id);
-        QuestionService mbs = new QuestionServiceImpl(null);
+        QuestionService mbs = new QuestionServiceImpl();
         if(mbs.delAcceptQuestion(id)){
-             mbs.releaseConnection();
          request.setAttribute("success","Thành công");
         
         }

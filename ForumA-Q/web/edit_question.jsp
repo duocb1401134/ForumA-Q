@@ -33,16 +33,14 @@
                                         try {
                                             Integer id = Integer.parseInt(request.getParameter("id"));
                                             Question q = new Question(id);
-                                            QuestionService qs = new QuestionServiceImpl(null);
+                                            QuestionService qs = new QuestionServiceImpl();
                                             q = qs.findById(id);
-                                            qs.releaseConnection();
                                             request.setAttribute("question", q);
                                         } catch (Exception e) {
                                             Integer id = (Integer) request.getAttribute("id");
                                             Question q = new Question(id);
-                                            QuestionService qs = new QuestionServiceImpl(null);
+                                            QuestionService qs = new QuestionServiceImpl();
                                             q = qs.findById(id);
-                                            qs.releaseConnection();
                                             request.setAttribute("question", q);
                                         }
 
@@ -73,7 +71,7 @@
 
                                             <%   
                                                 
-                                                SubjectService subjectService = new SubjectServiceImpl(null);
+                                                SubjectService subjectService = new SubjectServiceImpl();
                                                 List<Subject> listSubject = subjectService.findAll();
 
                                             %>

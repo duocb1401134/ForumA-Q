@@ -29,8 +29,8 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberDAO memberDAO;
 
-    public MemberServiceImpl(ConnectionPool cp) {
-        this.memberDAO = new MemberDAOImpl(cp);
+    public MemberServiceImpl() {
+        this.memberDAO = new MemberDAOImpl();
     }
 
     @Override
@@ -223,9 +223,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean updateAvatar(int memberId, Image image) {
-        ImageService imagesv = new ImageServiceImpl(null);
+        ImageService imagesv = new ImageServiceImpl();
         int lastId = imagesv.addGetLastId(image);
-        MemberImageDAO imgMember = new MemberImageDAOImpl(null);
+        MemberImageDAO imgMember = new MemberImageDAOImpl();
         return imgMember.addImageMember(memberId, lastId);
     }
 
@@ -237,7 +237,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean changePass(int memberID, String passCurrent, String passNew) {
 
-        MemberDAO md = new MemberDAOImpl(this.getConnectionPool());
+        MemberDAO md = new MemberDAOImpl();
         Member mo = findById(memberID);
         if(mo.getMemberPass().equals(HashMD5.md5(passCurrent))){
              return md.changePass(memberID,HashMD5.md5(passNew));           

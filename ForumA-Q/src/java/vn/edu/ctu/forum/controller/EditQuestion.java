@@ -51,7 +51,7 @@ public class EditQuestion extends HttpServlet {
             String questiondecription = request.getParameter("questiondescription");
             String questioncontent = request.getParameter("questioncontent");
 
-            QuestionService questionService = new QuestionServiceImpl(null);
+            QuestionService questionService = new QuestionServiceImpl();
 
             try {
 

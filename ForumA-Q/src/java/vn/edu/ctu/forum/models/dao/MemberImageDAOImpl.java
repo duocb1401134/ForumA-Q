@@ -16,24 +16,27 @@ import vn.edu.ctu.forum.models.untils.ConnectionPool;
  *
  * @author NTD
  */
-public class MemberImageDAOImpl extends BaseDAOImpl implements MemberImageDAO{
+public class MemberImageDAOImpl extends BaseDAOImpl implements MemberImageDAO {
 
-    public MemberImageDAOImpl(ConnectionPool cp) {
-        super(cp);
+    public MemberImageDAOImpl() {
+        super();
     }
 
     @Override
     public ResultSet findByMemberId(Integer memberID) {
+        ResultSet kq;
         try {
             String sql = "SELECT `image_id`, `member_id` FROM `member_image` WHERE `member_id` = ?";
             PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setInt(1, memberID);
-            return this.get(pre);
+            kq = this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(MemberImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
-    }    
+        releaseConnection();
+        return kq;
+    }
 //    public static void main(String[] args) throws SQLException {
 //        MemberImageDAO m = new MemberImageDAOImpl(null);
 //        ResultSet rs = m.findByMemberId(1);
@@ -47,15 +50,18 @@ public class MemberImageDAOImpl extends BaseDAOImpl implements MemberImageDAO{
 
     @Override
     public boolean addImageMember(Integer memberID, Integer imageID) {
+        boolean kq;
         try {
             String sql = "INSERT INTO `member_image`(`image_id`, `member_id`) VALUES (?,?)";
-            PreparedStatement pre =this.connection.prepareStatement(sql);
+            PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setInt(1, imageID);
             pre.setInt(2, memberID);
-            return this.add(pre);
+            kq =  this.add(pre);
         } catch (SQLException ex) {
             Logger.getLogger(MemberImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 }

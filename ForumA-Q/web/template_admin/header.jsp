@@ -63,7 +63,7 @@
                 <ul class="nav pull-right top-menu">
                     <%
                         Member member = (Member) request.getSession().getAttribute("member");
-                        ImageServiceImpl imageService = new ImageServiceImpl(null);
+                        ImageServiceImpl imageService = new ImageServiceImpl();
                         Image image = imageService.findByIdMember(member.getMemberId());
                         
                     %>

@@ -20,7 +20,7 @@
                 <div>
                     <%
                       
-                        QuestionServiceImpl qssv = new QuestionServiceImpl(null);
+                        QuestionServiceImpl qssv = new QuestionServiceImpl();
                         List<Question> list1 = qssv.findByAccect();
                     %>
                     <table class="table">

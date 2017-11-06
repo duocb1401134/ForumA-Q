@@ -59,7 +59,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     @Override
     public void refreshConnectionPool(){
-        while(pool.empty()){
+        while(!pool.empty()){
             try {
                 pool.pop().close();
             } catch (SQLException ex) {

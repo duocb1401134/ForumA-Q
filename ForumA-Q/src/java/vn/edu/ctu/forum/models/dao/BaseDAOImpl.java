@@ -20,21 +20,15 @@ import vn.edu.ctu.forum.models.untils.ConnectionPoolImpl;
  */
 public class BaseDAOImpl implements BaseDAO {
 
-    private ConnectionPool connectionPool;
-    protected Connection connection;
+    private  static ConnectionPool connectionPool = new ConnectionPoolImpl();
+    protected static Connection connection;
 
     // Contructor co tham so truyen vao la doi tuong ConnectionPool
-    public BaseDAOImpl(ConnectionPool cp) {
+    public BaseDAOImpl() {
         // neu ConnectionPool truyen vao la null thi tao moi
         
         try {
-            // neu connection pool truyen vao la null thi tao moi
-            if (connectionPool == null) {
-                this.connectionPool = new ConnectionPoolImpl();
-            } else {
-                this.connectionPool = cp;
-            }
-            // lay ket noi tu connection pool
+            
             this.connection = connectionPool.getConnectionPool();
 
             // Set AutoCommit la false de thuc hien commit bang tay

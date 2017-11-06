@@ -36,10 +36,9 @@ public class AcceptQuestion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Integer id = Integer.parseInt(request.getParameter("id"));
         Question q = new Question(id);
-        QuestionService qs = new QuestionServiceImpl(null);
+        QuestionService qs = new QuestionServiceImpl();
         if(qs.editQuestionAccept(id)){
          request.setAttribute("success","Thành công");
-         qs.releaseConnection();
         }
         else{
             request.setAttribute("error","Đã xẩy ra lổi");

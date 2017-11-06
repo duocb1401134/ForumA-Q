@@ -20,7 +20,7 @@
 <%    int limit = 4;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     List<Question> listQuestion;
-    QuestionService questionService = new QuestionServiceImpl(null);
+    QuestionService questionService = new QuestionServiceImpl();
 
     String queryStringCurrentPage = request.getParameter("page");
     int total = questionService.totalQuestion();

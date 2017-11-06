@@ -43,7 +43,7 @@ public class AddAnwser extends HttpServlet {
 
         String contentAnwser = request.getParameter("message");
         String questionId = request.getParameter("questionId");
-        AnwserService anwserService = new AnwserServiceImpl(null);
+        AnwserService anwserService = new AnwserServiceImpl();
         if (questionId != null) {
             int intQuestionId = Integer.parseInt(questionId);
             Answer anwser = new Answer(intQuestionId, memberId, contentAnwser);

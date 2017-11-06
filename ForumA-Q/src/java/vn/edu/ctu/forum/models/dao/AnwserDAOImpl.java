@@ -19,12 +19,13 @@ import vn.edu.ctu.forum.models.untils.ConnectionPool;
  */
 public class AnwserDAOImpl extends BaseDAOImpl implements AnwserDAO {
 
-    public AnwserDAOImpl(ConnectionPool cp) {
-        super(cp);
+    public AnwserDAOImpl() {
+        super();
     }
 
     @Override
     public boolean addAnwer(Answer anwser) {
+        boolean kq;
         try {
             String sql = "INSERT INTO `anwser`(`anwser_id`, `question_id`, `member_id`, `anwser_content`, `anwser_date`) "
                     + "VALUES (null,?,?,?,now())";
@@ -32,11 +33,13 @@ public class AnwserDAOImpl extends BaseDAOImpl implements AnwserDAO {
             pre.setInt(1, anwser.getQuestionId());
             pre.setInt(2, anwser.getMemberId());
             pre.setString(3, anwser.getAnwserContent());
-            return this.add(pre);
+            kq = this.add(pre);
         } catch (SQLException ex) {
             Logger.getLogger(AnwserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 //    public static void main(String[] args) {
 //        AnwserDAO anwserDAO = new AnwserDAOImpl(null);
@@ -46,16 +49,19 @@ public class AnwserDAOImpl extends BaseDAOImpl implements AnwserDAO {
 
     @Override
     public ResultSet findByIdQuestion(int subjectId) {
+        ResultSet kq;
         try {
             String sql = "SELECT `anwser_id`, `question_id`, `member_id`, `anwser_content`, `anwser_date` FROM"
                     + " `anwser` WHERE `question_id` = ? ORDER BY `anwser_date`";
             PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setInt(1, subjectId);
-            return this.get(pre);
+            kq = this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(AnwserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
+        releaseConnection();
+        return kq;
     }
 //    public static void main(String[] args) {
 //        try {

@@ -95,7 +95,7 @@ public class AddSubject extends HttpServlet {
                     }
                 }
             }
-            SubjectService subjectService = new SubjectServiceImpl(null);
+            SubjectService subjectService = new SubjectServiceImpl();
             Image image = new Image(alt + subjectName, src);
             if (subjectId != null && subjectName != null) {
                 Subject sj = new Subject(subjectId, subjectName);

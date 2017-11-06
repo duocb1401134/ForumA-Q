@@ -22,7 +22,7 @@
             </div>
             <%}%>
             <form action="uploadAvatarMember" method="POST" enctype = "multipart/form-data">
-                <input type="text" name="id" value="<%=member.getMemberId()%>">           
+                <input type="hidden" name="id" value="<%=member.getMemberId()%>">           
                 <div class="well" data-bind="fileDrag: fileData">
                     <div class="form-group row">
                         <div class="col-md-6">

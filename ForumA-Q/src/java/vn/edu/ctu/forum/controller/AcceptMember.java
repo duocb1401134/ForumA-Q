@@ -36,10 +36,9 @@ public class AcceptMember extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
        Integer id = Integer.parseInt(request.getParameter("id"));
        Member mb = new Member(id);
-        MemberService mbs = new MemberServiceImpl(null);
+        MemberService mbs = new MemberServiceImpl();
         if(mbs.editAcceptMember(id)){
          request.setAttribute("success","Thành công");
-         mbs.releaseConnection();
         }
         else{
             request.setAttribute("error","Đã xẩy ra lổi");

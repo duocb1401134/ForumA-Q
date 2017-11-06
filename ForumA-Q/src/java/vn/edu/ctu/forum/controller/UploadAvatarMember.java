@@ -91,7 +91,7 @@ public class UploadAvatarMember extends HttpServlet {
                 HttpSession httpSession = request.getSession(true);
                 Member memberO = (Member) httpSession.getAttribute("member");
                 int id = memberO.getMemberId();
-                MemberService member = new MemberServiceImpl(null);
+                MemberService member = new MemberServiceImpl();
                 Image image = new Image(alt, src);
                 if (member.updateAvatar(id, image)) {
                     request.setAttribute("success", "Cập nhật thành công");

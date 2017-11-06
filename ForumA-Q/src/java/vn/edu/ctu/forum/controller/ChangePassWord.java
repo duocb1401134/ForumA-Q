@@ -37,7 +37,7 @@ public class ChangePassWord extends HttpServlet {
         String passWordCurrent = request.getParameter("password_current");        
         String pass2 = request.getParameter("password2");
         Integer id = Integer.parseInt(request.getParameter("id"));
-        MemberService mbs = new MemberServiceImpl(null);
+        MemberService mbs = new MemberServiceImpl();
         if(mbs.changePass(id, passWordCurrent, pass2)){
             request.setAttribute("success","Thành công");
         }else{

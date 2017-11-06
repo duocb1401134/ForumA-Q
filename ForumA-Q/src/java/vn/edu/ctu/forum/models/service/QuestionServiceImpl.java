@@ -29,8 +29,8 @@ public class QuestionServiceImpl implements QuestionService {
     private MemberService memberService;
     private final QuestionDAO questionDAO;
 
-    public QuestionServiceImpl(ConnectionPool cp) {
-        this.questionDAO = new QuestionDAOImpl(cp);
+    public QuestionServiceImpl() {
+        this.questionDAO = new QuestionDAOImpl();
     }
 
     @Override
@@ -68,8 +68,8 @@ public class QuestionServiceImpl implements QuestionService {
         try {
             while (rs.next()) {
                 try {
-                    MemberService mb = new MemberServiceImpl(this.questionDAO.getConnectionPool());
-                    SubjectService ss = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
+                    MemberService mb = new MemberServiceImpl();
+                    SubjectService ss = new SubjectServiceImpl();
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
                     Question qt = new Question(rs.getInt("question_id"),
@@ -93,8 +93,8 @@ public class QuestionServiceImpl implements QuestionService {
         try {
             while (rs.next()) {
                 try {
-                    MemberService mb = new MemberServiceImpl(this.questionDAO.getConnectionPool());
-                    SubjectService ss = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
+                    MemberService mb = new MemberServiceImpl();
+                    SubjectService ss = new SubjectServiceImpl();
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
                     Question qt = new Question(rs.getInt("question_id"),
@@ -150,9 +150,9 @@ public class QuestionServiceImpl implements QuestionService {
                 String questionDecription = rs.getString("question_decription");
                 String questionContent = rs.getString("question_content");
                 Date questionDate = rs.getDate("question_date");
-                memberService = new MemberServiceImpl(this.questionDAO.getConnectionPool());
+                memberService = new MemberServiceImpl();
                 Member m = memberService.findById(rs.getInt("member_id"));
-                subjectService = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
+                subjectService = new SubjectServiceImpl();
                 Subject sb = subjectService.findById(rs.getString("subject_id"));
                 question = new Question(questionID, sb, m, quesionName, questionDecription, questionContent, questionDate);
             }
@@ -184,9 +184,9 @@ public class QuestionServiceImpl implements QuestionService {
                 String questionDecription = rs.getString("question_decription");
                 String questionContent = rs.getString("question_content");
                 Date questionDate = rs.getDate("question_date");
-                memberService = new MemberServiceImpl(this.questionDAO.getConnectionPool());
+                memberService = new MemberServiceImpl();
                 Member m = memberService.findById(rs.getInt("member_id"));
-                subjectService = new SubjectServiceImpl(this.questionDAO.getConnectionPool());
+                subjectService = new SubjectServiceImpl();
                 Subject sb = subjectService.findById(rs.getString("subject_id"));
                 Question question = new Question(questionID, sb, m, quesionName, questionDecription, questionContent, questionDate);
                 listQuestion.add(question);

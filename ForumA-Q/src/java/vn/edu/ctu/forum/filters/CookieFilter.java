@@ -53,7 +53,7 @@ public class CookieFilter implements Filter {
             System.out.println(emailMember+"__" + passMember);
             if (!emailMember.equals("") || !passMember.equals("")) {
                 
-                MemberService mbs = new MemberServiceImpl(null);
+                MemberService mbs = new MemberServiceImpl();
                 Member m = mbs.login(emailMember, passMember);
                 
                 if (m != null) {

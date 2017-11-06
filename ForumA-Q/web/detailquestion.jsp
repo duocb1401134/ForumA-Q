@@ -44,7 +44,7 @@
                 <div class="comments-grids">
                     <%
                         for(int i = 0; i< listAnwser.size();i++){                           
-                        ImageService imageService = new ImageServiceImpl(null);
+                        ImageService imageService = new ImageServiceImpl();
                         Image image = imageService.findByIdMember(listAnwser.get(i).getMember().getMemberId());
                         
                     %>

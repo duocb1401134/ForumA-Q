@@ -18,25 +18,28 @@ import vn.edu.ctu.forum.models.untils.ConnectionPool;
  *
  * @author PC
  */
-public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
+public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO {
 
-    public SubjectDAOImpl(ConnectionPool connectionPool) {
-        super(connectionPool);
+    public SubjectDAOImpl() {
+        super();
     }
 
     @Override
     public boolean addSubject(Subject sb) {
+        boolean kq;
         try {
             String sql = "INSERT INTO `subject`(`subject_id`, `image_id`, `subject_name`) VALUES (?,?,?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, sb.getSubjectId());
             pre.setInt(2, sb.getImageId());
             pre.setString(3, sb.getSubjectName());
-            return this.add(pre);
+            kq = this.add(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 //    public static void main(String[] args) {
 //        SubjectDAO sjDAO = new SubjectDAOImpl(null);
@@ -45,71 +48,78 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO{
 //            System.out.println("oke");
 //        }else System.out.println("out");
 //    }
+
     @Override
     public boolean editSubject(Subject sb) {
+        boolean kq;
         try {
             String sql = "UPDATE `subject` SET `subject_name`=? WHERE `subject_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, sb.getSubjectId());
             pre.setString(2, sb.getSubjectName());
-            return this.edit(pre);
+            kq = this.edit(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public boolean delSubject(String id) {
+        boolean kq;
         try {
             String sql = "DELETE FROM `subject` WHERE `subject_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, id);
-            return this.del(pre);
+            kq = this.del(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
-    }    
+        refreshConnectionPool();
+        return kq;
+    }
 
     @Override
     public ResultSet findAll() {
-        try {
+        ResultSet kq;
 
-            String sql = "SELECT * FROM `subject`";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            //PreparedStatement pre = connection.prepareStatement(sql);
-            return resultSet;
-        } catch (SQLException ex) {
-            Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        String sql = "SELECT * FROM `subject`";
+        kq = this.get(sql);
+        releaseConnection();
+        return kq;
     }
 
 //    public static void main(String[] args) throws SQLException {
-//        SubjectDAO m = new SubjectDAOImpl(null);
+//        SubjectDAO m = new SubjectDAOImpl();
 //
-//        ResultSet rs = m.findByID("2");
+//        ResultSet rs = m.findAll();
 //
 //        if (rs != null) {
-//
-//            System.out.println(rs.getString("subject_id"));
+//            while (rs.next()) {                
+//                System.out.println(rs.getString("subject_id"));
+//            }
+// 
+//            
 //        } else {
 //            System.out.println("none");
 //        }
 //    }
-    
     @Override
     public ResultSet findByID(String id) {
+        ResultSet kq;
         try {
             String sql = "SELECT * FROM `subject` WHERE `subject_id`=?";
             PreparedStatement pre = this.connection.prepareStatement(sql);
-            pre.setString(1,id);
-            return this.get(pre);
+            pre.setString(1, id);
+            kq = this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
-    } 
+        releaseConnection();
+        return kq;
+    }
 }

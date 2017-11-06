@@ -47,10 +47,10 @@ public class UpdateProfileMember extends HttpServlet {
         int id = memberO.getMemberId();
 
         Member m = new Member(id, name, sex, strDate, introduce);
-        MemberService mbs = new MemberServiceImpl(null);
+        MemberService mbs = new MemberServiceImpl();
         if (mbs.editMember(m)) {
             httpSession.removeAttribute("member");
-            MemberService mbs1 = new MemberServiceImpl(null);
+            MemberService mbs1 = new MemberServiceImpl();
             httpSession.setAttribute("member", mbs1.findById(id));
             response.sendRedirect("profileMember.jsp");
         } else {

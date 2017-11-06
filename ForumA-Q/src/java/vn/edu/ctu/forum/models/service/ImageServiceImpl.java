@@ -26,8 +26,8 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageDAO imageDao;
 
-    public ImageServiceImpl(ConnectionPool cp) {
-        this.imageDao = new ImageDAOImpl(cp);
+    public ImageServiceImpl() {
+        this.imageDao = new ImageDAOImpl();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image findByIdMember(int id) {
-        MemberImageDAO mi = new MemberImageDAOImpl(this.imageDao.getConnectionPool());
+        MemberImageDAO mi = new MemberImageDAOImpl();
         ResultSet rs = mi.findByMemberId(id);
         Image image;
         MemberImage mio = null;

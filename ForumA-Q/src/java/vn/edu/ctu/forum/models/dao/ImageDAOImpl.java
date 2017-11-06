@@ -20,48 +20,58 @@ import vn.edu.ctu.forum.models.untils.ConnectionPool;
  */
 public class ImageDAOImpl extends BaseDAOImpl implements ImageDAO {
 
-    public ImageDAOImpl(ConnectionPool cp) {
-        super(cp);
+    public ImageDAOImpl() {
+        super();
     }
 
     @Override
     public boolean add(Image im) {
+        boolean kq;
         try {
             String sql = "INSERT INTO `image`(`image_alt`, `image_src`, `image_date_upload`) VALUES (?,?,now())";
             PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setString(1, im.getImageAlt());
             pre.setString(2, im.getImageSrc());
-            return this.add(pre);
+            kq = this.add(pre);
         } catch (SQLException ex) {
             Logger.getLogger(ImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public ResultSet findById(int id) {
+        ResultSet kq;
         try {
             String sql = "SELECT `image_id`, `image_alt`, `image_src`, `image_date_upload` FROM `image` WHERE `image_id` = ?";
             PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return this.get(pre);
+            kq = this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(ImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
+        releaseConnection();
+        return kq;
     }
+
     @Override
-    public Integer getLastID(Image img) {       
+    public Integer getLastID(Image img) {
+        Integer kq;
         try {
             String sql = "INSERT INTO `image`(`image_alt`, `image_src`, `image_date_upload`) VALUES (?,?,now())";
-            PreparedStatement pre = this.connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pre = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setString(1, img.getImageAlt());
             pre.setString(2, img.getImageSrc());
-            return this.addGetLastID(pre);
+            kq = this.addGetLastID(pre);
         } catch (SQLException ex) {
             Logger.getLogger(ImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = 0;
         }
-        return 0;
+        refreshConnectionPool();
+        return kq;
     }
 
 //    public static void main(String[] args) {

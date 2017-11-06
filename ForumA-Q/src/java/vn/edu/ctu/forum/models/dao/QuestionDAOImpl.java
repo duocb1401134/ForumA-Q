@@ -20,12 +20,13 @@ import vn.edu.ctu.forum.models.untils.ConnectionPool;
  */
 public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
 
-    public QuestionDAOImpl(ConnectionPool connectionPool) {
-        super(connectionPool);
+    public QuestionDAOImpl() {
+        super();
     }
 
     @Override
     public boolean addQuestion(Question question) {
+        boolean kq;
         try {
             String sql = "INSERT INTO `question`("
                     + "`question_id`, "
@@ -43,17 +44,19 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
             pre.setString(4, question.getQuestionDecription());
             pre.setString(5, question.getQuestionContent());
 
-            this.add(pre);
-            return true;
+            kq = this.add(pre);
             //Date and accect chua biet lam sao.
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public boolean editQuetion(Question question) {
+        boolean kq;
         try {
             String sql = "UPDATE `question` SET "
                     + "`subject_id`=?,"
@@ -70,133 +73,161 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
             pre.setString(4, question.getQuestionContent());
             pre.setInt(5, question.getQuestionId());
 
-            this.edit(pre);
-            return true;
+            kq = this.edit(pre);
             //Date and accect chua biet lam sao.
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public boolean delQuetion(int id) {
+        boolean kq;
         try {
             String sql = "DELETE FROM `question` "
                     + "WHERE `question_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return this.del(pre);
-            
+            kq = this.del(pre);
+
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public ResultSet findAll() {
+        ResultSet kq;
         String sql = "SELECT * FROM `question` where `question_accept`=1";
-        return this.get(sql);
+        kq = this.get(sql);
+        releaseConnection();
+        return kq;
     }
 
     @Override
     public ResultSet findByIdMember(int id) {
+        ResultSet kq;
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
                     + " `member_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return this.get(pre);
+            kq = this.get(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
+        releaseConnection();
+        return kq;
     }
 
     @Override
     public ResultSet findByAccect() {
+        ResultSet kq;
         String sql = "SELECT `question_id`, `subject_id`,"
                 + " `member_id`, `question_name`, `question_decription`,"
                 + " `question_content`, `question_date`, `question_accept`"
                 + " FROM `question` WHERE `question_accept`=0";
 
-        return this.get(sql);
+        kq =  this.get(sql);
+        releaseConnection();
+        return kq;
     }
 
     @Override
     public boolean editQuestionAccept(int id) {
+        boolean kq;
         try {
             Question question = new Question(id);
             String sql = "UPDATE `question` SET `question_accept`= 1 WHERE `question_id` = ?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return this.edit(pre);
+            kq = this.edit(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public ResultSet findByidSubject(String id) {
+        ResultSet kq;
         try {
             String sql = "SELECT * FROM"
                     + " `subject` WHERE"
                     + " `subject_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, id);
-            return this.get(pre);
+            kq=  this.get(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
+        releaseConnection();
+        return kq;
     }
 
     @Override
     public boolean delAcceptQuestion(int id) {
+        boolean kq;
         try {
             String sql = "UPDATE `question` SET `question_accept`=2 WHERE `question_id`=?";
             PreparedStatement pre = this.connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return this.edit(pre);
+            kq = this.edit(pre);
         } catch (SQLException ex) {
             Logger.getLogger(MemberDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
         }
-        return false;
+        refreshConnectionPool();
+        return kq;
     }
 
     @Override
     public ResultSet find(int limit, int start) {
+        ResultSet kq;
         try {
             String sql = "SELECT * FROM `question` where `question_accept` = 1 ORDER BY `question_date` DESC LIMIT ? OFFSET ?";
             PreparedStatement pre = this.connection.prepareCall(sql);
             pre.setInt(1, limit);
             pre.setInt(2, start);
-            return this.get(pre);
+            kq = this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
+        releaseConnection();
+        return kq;
     }
 
     @Override
     public ResultSet findById(int id) {
+        ResultSet kq;
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
                     + " `question_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            return this.get(pre);
+            kq= this.get(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
         }
-        return null;
+        releaseConnection();
+        return kq;
     }
 }

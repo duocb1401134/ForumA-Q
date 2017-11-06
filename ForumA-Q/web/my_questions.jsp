@@ -51,10 +51,11 @@
 
                 <div>
                     <%
-                        QuestionServiceImpl qssv = new QuestionServiceImpl(null);
+                        QuestionServiceImpl qssv = new QuestionServiceImpl();
 
                         Integer memberid = ((Member) session.getAttribute("member")).getMemberId();
                         List<Question> list1 = qssv.findByIdMember(memberid);
+                        
                     %>
                     <table class="table">
                         <thead>

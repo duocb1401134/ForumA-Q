@@ -43,10 +43,10 @@ public class DetailQuestion extends HttpServlet {
             String questionID = request.getParameter("questionId");
             try {
                 int id = Integer.parseInt(questionID);
-                QuestionService questionService = new QuestionServiceImpl(null);
+                QuestionService questionService = new QuestionServiceImpl();
                 Question question = questionService.findById(id);
                 request.setAttribute("question", question);
-                AnwserService anwserService = new AnwserServiceImpl(null);
+                AnwserService anwserService = new AnwserServiceImpl();
                 List<Answer> listAnswers = anwserService.findByIdQuesion(id);
                 if(listAnswers!=null){
                     request.setAttribute("listAnswers", listAnswers);
