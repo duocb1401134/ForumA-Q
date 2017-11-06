@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!-- Modal1 -->
+
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -14,7 +15,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div class="signin-form">
-                    <h3 class="agileinfo_sign">Sign In</h3>	
+                    <h3 class="agileinfo_sign">Sign In</h3>                    
                     <%
                         if (request.getAttribute("erros") != null) {
                             %>
@@ -24,7 +25,7 @@
                     <%}                    
                     %>
                     <div class="login-form">
-                        <form action="login" method="post">
+                        <form action="login" method="post">                            
                             <input type="email" name="email" placeholder="E-mail" required="true">
                             <input type="password" name="password" placeholder="Password" required="true">
                             <div class="">
@@ -65,6 +66,7 @@
                     %>
                     <div class="login-form">
                         <form action="register" method="post">
+                            <input type="hidden" value="<%=request.getRequestURL()%>" name="currentPage"/>
                             <input type="text" name="name" placeholder="Username" required="">
                             <input type="email" name="email" placeholder="Email" required="">
                             <input type="password" name="password" id="password1" placeholder="Password" required="">

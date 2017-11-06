@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <h1><a class="navbar-brand" href="index_admin.html"><i class="fa fa-crosshairs" aria-hidden="true"></i> Forum A&Q</a></h1>
+            <h1><a class="navbar-brand" href="index.jsp"><i class="fa fa-crosshairs" aria-hidden="true"></i> Forum A&Q</a></h1>
 
         </div>
         <ul class="agile_forms">                    

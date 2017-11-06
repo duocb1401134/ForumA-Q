@@ -69,8 +69,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
             pre.setString(3, question.getQuestionDecription());
             pre.setString(4, question.getQuestionContent());
             pre.setInt(5, question.getQuestionId());
-            
-            
+
             this.edit(pre);
             return true;
             //Date and accect chua biet lam sao.
@@ -97,16 +96,8 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
 
     @Override
     public ResultSet findAll() {
-        try {
-            String sql = "SELECT * FROM `question`";
-            PreparedStatement pre = connection.prepareStatement(sql);
-            
-            this.get(pre);
-            //???????????
-        } catch (SQLException ex) {
-            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        String sql = "SELECT * FROM `question` where `question_accept`=1";
+        return this.get(sql);
     }
 
     @Override
@@ -131,27 +122,13 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
                 + " `member_id`, `question_name`, `question_decription`,"
                 + " `question_content`, `question_date`, `question_accept`"
                 + " FROM `question` WHERE `question_accept`=0";
-        
-        return this.get(sql);
-    }
-    public ResultSet findByIdQuestion(int id) {
-        try {
-            String sql = "SELECT * FROM"
-                    + " `question` WHERE"
-                    + " `question_id`=?";
-            PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setInt(1, id);
-            return this.get(pre);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        return this.get(sql);
     }
 
     @Override
     public boolean editQuestionAccept(int id) {
-       try {
+        try {
             Question question = new Question(id);
             String sql = "UPDATE `question` SET `question_accept`= 1 WHERE `question_id` = ?";
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -193,6 +170,33 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         return false;
     }
 
- 
+    @Override
+    public ResultSet find(int limit, int start) {
+        try {
+            String sql = "SELECT * FROM `question` where `question_accept` = 1 ORDER BY `question_date` DESC LIMIT ? OFFSET ?";
+            PreparedStatement pre = this.connection.prepareCall(sql);
+            pre.setInt(1, limit);
+            pre.setInt(2, start);
+            return this.get(pre);
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
+    @Override
+    public ResultSet findById(int id) {
+        try {
+            String sql = "SELECT * FROM"
+                    + " `question` WHERE"
+                    + " `question_id`=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, id);
+            return this.get(pre);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

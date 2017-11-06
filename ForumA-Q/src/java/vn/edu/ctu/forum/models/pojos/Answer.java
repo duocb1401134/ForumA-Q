@@ -13,14 +13,53 @@ import java.util.Date;
  */
 public class Answer {
     private Integer anwserId;
+    private Integer questionId;
+    private Integer memberId;
     private String anwserContent;
     private Date anwserDate;
+    private Member member;
 
-    public Answer(Integer anwserId, String anwserContent, Date anwserDate) {
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Answer(Integer questionId, Integer memberId, String anwserContent) {
+        this.questionId = questionId;
+        this.memberId = memberId;
+        this.anwserContent = anwserContent;
+    }
+
+    public Answer(Integer anwserId, Integer questionId, String anwserContent, Date anwserDate, Member member) {
         this.anwserId = anwserId;
+        this.questionId = questionId;
         this.anwserContent = anwserContent;
         this.anwserDate = anwserDate;
+        this.member = member;
     }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
+    
+    
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+    
+    
 
     public Integer getAnwserId() {
         return anwserId;
@@ -44,6 +83,5 @@ public class Answer {
 
     public void setAnwserDate(Date anwserDate) {
         this.anwserDate = anwserDate;
-    }
-    
+    }    
 }

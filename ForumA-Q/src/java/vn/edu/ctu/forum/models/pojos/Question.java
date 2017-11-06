@@ -130,7 +130,7 @@ public class Question {
         this.questionContent = questionContent;
     }
     
-    public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, boolean questionAccept) {
+    public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate) {
         this.questionId = questionId;
         this.subject = subject;
         this.member = member;
@@ -138,7 +138,6 @@ public class Question {
         this.questionDecription = questionDecription;
         this.questionContent = questionContent;
         this.questionDate = questionDate;
-        this.questionAccept = questionAccept;
     }
     public  Question(){
     }

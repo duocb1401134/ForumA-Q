@@ -13,25 +13,35 @@ import vn.edu.ctu.forum.models.pojos.Question;
  * @author Ew
  */
 public interface QuestionDAO extends BaseDAO {
+
     //Them Question
     public boolean addQuestion(Question question);
+
     //Sua Question
     public boolean editQuetion(Question question);
+
     //Accept Question
     public boolean editQuestionAccept(int id);
+
     //Xoa Question
     public boolean delQuetion(int id);
+
     //delete member accept
     public boolean delAcceptQuestion(int id);
+
     //Lay toan bo danh sach
     public ResultSet findAll();
+
     //Lay theo Id
     public ResultSet findByIdMember(int id);
-    
-    public ResultSet findByIdQuestion(int id);
+
+     public ResultSet findById(int id);
+
     //Lay Question chua 
     public ResultSet findByAccect();
+
     //Find ID Subject
     public ResultSet findByidSubject(String id);
-    
+
+    public ResultSet find(int limit, int start);
 }

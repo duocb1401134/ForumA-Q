@@ -14,7 +14,7 @@ import vn.edu.ctu.forum.models.pojos.Question;
  * @author Administrator
  */
 public interface QuestionService extends BaseService{
-     public boolean addQuestion(Question question);
+    public boolean addQuestion(Question question);
     //Sua Question
     public boolean editQuetion(Question question);
     //Accept Question
@@ -24,13 +24,16 @@ public interface QuestionService extends BaseService{
     //Lay toan bo danh sach
     public List<Question> findAll();
     //Lay theo Id
-    public Question findByIdQuestion(int id);
+    public Question findById(int id);
     
     public List<Question> findByIdMember(int id);
     //Lay Question chua 
     public List<Question> findByAccect();
-    //Find ID Subject
-    public ResultSet findByidSubject(String id);
+
     //delete member accept
     public boolean delAcceptQuestion(int id);
+    //find limit
+    public List<Question> find(int limit,int start);
+    
+    public int totalQuestion();
 }

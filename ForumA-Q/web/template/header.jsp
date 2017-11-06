@@ -21,7 +21,7 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/blog.css" rel="stylesheet" type="text/css" media="all" />
-
+        <link href="css/single.css" rel="stylesheet" type="text/css" media="all" />
         <!-- font-awesome-icons -->
         <link href="css/font-awesome.css" rel="stylesheet"> 
         <!-- //font-awesome-icons -->

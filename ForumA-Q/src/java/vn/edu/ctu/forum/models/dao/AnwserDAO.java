@@ -6,15 +6,17 @@
 package vn.edu.ctu.forum.models.dao;
 
 import java.sql.ResultSet;
-
+import vn.edu.ctu.forum.models.pojos.Answer;
 /**
  *
- * @author PC
+ * @author NTD
  */
-public interface AandQDAO extends BaseDAO {
+public interface AnwserDAO extends BaseDAO{
     
-    //xoa A & Q
-    public boolean delAandQ(String question_id, String answer_id);
-    //tim id
-    public ResultSet findById(String id);
+    //add anwer get id
+    public boolean addAnwer(Answer anwser);
+    
+    //find by question
+    public ResultSet findByIdQuestion(int subjectId);
+    
 }
