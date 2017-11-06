@@ -7,14 +7,11 @@ package vn.edu.ctu.forum.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import vn.edu.ctu.forum.models.pojos.Member;
 import vn.edu.ctu.forum.models.pojos.Question;
 import vn.edu.ctu.forum.models.service.QuestionService;
 import vn.edu.ctu.forum.models.service.QuestionServiceImpl;
@@ -23,8 +20,8 @@ import vn.edu.ctu.forum.models.service.QuestionServiceImpl;
  *
  * @author Feng
  */
-@WebServlet(name = "EditQuestion", urlPatterns = {"/editQuestion"})
-public class EditQuestion extends HttpServlet {
+@WebServlet(name = "DelQuestion", urlPatterns = {"/delQuestion"})
+public class DelQuestion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,47 +32,26 @@ public class EditQuestion extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     //   request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Question mb = new Question(id);
+        QuestionService mbs = new QuestionServiceImpl(null);
+        if (mbs.delQuetion(id)) {
+           mbs.releaseConnection();
+           response.sendRedirect("my_questions.jsp?kqaction=3");
+            //request.setAttribute("success", "Successfully deleted");
 
-            HttpSession session = request.getSession();
-            
-            Integer questionid = Integer.parseInt(request.getParameter("questionid"));
-            String subjectid = request.getParameter("subject");
-            String questionname = request.getParameter("questionname");
-            String questiondecription = request.getParameter("questiondescription");
-            String questioncontent = request.getParameter("questioncontent");
-
-            QuestionService questionService = new QuestionServiceImpl(null);
-
-            try {
-
-               
-                if ((!questionname.equals("")) && (!questiondecription.equals("")) && (!questioncontent.equals(""))) {
-                    Question question = new Question(questionid, subjectid, questionname, questiondecription, questioncontent);
-                    if (questionService.editQuetion(question)) {
-                        request.setAttribute("success", "Cập nhật thành công");
-                    } else {
-                        request.setAttribute("error", "Cập nhật Thất Bại!");
-                    }
-                    
-                } else {
-                    request.setAttribute("error", "Value is null");
-
-                }
-            } catch (Exception ex) {
-                request.setAttribute("error", "There was an error: " + ex.getMessage());
-            }
-            request.setAttribute("id", questionid);
-            getServletContext().getRequestDispatcher("/edit_question").forward(request, response);
+        } else {
+            response.sendRedirect("my_questions.jsp?kqaction=4");
+           // request.setAttribute("error", "Can not delete");
         }
+        
+        
+        //getServletContext().getRequestDispatcher("/my_questions.jsp").forward(request, response);
+        
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

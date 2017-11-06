@@ -86,8 +86,8 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
                     + "WHERE `question_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            this.del(pre);
-            //Date and accect chua biet lam sao.
+            return this.del(pre);
+            
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

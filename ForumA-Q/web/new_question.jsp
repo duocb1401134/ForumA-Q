@@ -7,7 +7,6 @@
 <%@page import="vn.edu.ctu.forum.models.service.SubjectServiceImpl"%>
 <%@page import="vn.edu.ctu.forum.models.service.SubjectService"%>
 <%@page import="vn.edu.ctu.forum.models.pojos.Subject"%>
-<a href="template_admin/header.jsp"></a>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  %>
 <%@include file="//template_admin/header.jsp" %>
 <%@include file="//template_admin/sidebar.jsp" %>
@@ -25,20 +24,17 @@
                             </header>
                             <div class="panel-body">
                                 <form class="form-horizontal bucket-form"  action="addNewQuestion" method="get">
-                                    <% if (request.getAttribute("success") != null) {%>
-                                    <div class="alert alert-success" role="alert">
-                                        <%=request.getAttribute("success")%>
-                                    </div>
-                                    <%}
-                                        if (request.getAttribute("error") != null) {%>
+                                    
+                                    <%
+                                        if (request.getParameter("error") != null) {%>
                                     <div class="alert alert-danger" role="alert">
-                                        <%=request.getAttribute("error")%>
+                                        Value is null
                                     </div>
                                     <%}%>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Name</label>
                                         <div class="col-sm-6">
-                                            <input name="questionname" type="text" class="form-control">
+                                            <input name="questionname" type="text" class="form-control" required >
                                         </div>
                                     </div>
 
@@ -66,7 +62,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Description</label>
                                         <div class="col-sm-6">
-                                            <textarea name="questiondescription" type="text" class="form-control"></textarea>
+                                            <textarea name="questiondescription" type="text" class="form-control" required ></textarea>
 
                                         </div>
                                     </div>
@@ -74,7 +70,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Question Content</label>
                                         <div class="col-sm-6">
-                                            <textarea id="editor1" name="questioncontent" type="text" class="form-control"></textarea>
+                                            <textarea id="editor1" name="questioncontent" type="text" class="form-control"  required></textarea>
                                             <script>
 
                                                 var editor = CKEDITOR.replace('editor1',
@@ -83,7 +79,7 @@
                                                             // Image dialog, "Browse Server" button
                                                             filebrowserImageBrowseUrl: '',
                                                             // Upload tab in the Image dialog
-                                                            filebrowserFlashBrowseUrl:'',
+                                                            filebrowserFlashBrowseUrl:''
                                                         });
                                                 CKFinder.setupCKEditor(editor, '<%=request.getContextPath()%>/ckfinder/');
 
@@ -94,8 +90,10 @@
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-6">
                                             <button class="btn btn-primary" type="submit" >Make Question</button>
-                                            <button class="btn btn-success" type="submit">Refresh</button>
-                                            <button class="btn btn-danger" type="submit" onclick="#">Cancel</button>
+                                            <a href="new_question.jsp"  class="btn btn-danger">
+                                                Refresh
+                                            </a>
+                                            
                                         </div>
                                     </div>
 

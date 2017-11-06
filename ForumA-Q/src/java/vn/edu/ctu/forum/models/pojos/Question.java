@@ -21,7 +21,9 @@ public class Question {
     private String questionDecription;
     private String questionContent;
     private Date questionDate;
-    private boolean questionAccept;
+    private Integer questionAccept;
+
+
 
     public Integer getQuestionId() {
         return questionId;
@@ -79,13 +81,15 @@ public class Question {
         this.questionDate = questionDate;
     }
 
-    public boolean isQuestionAccept() {
+    public Integer getQuestionAccept() {
         return questionAccept;
     }
 
-    public void setQuestionAccept(boolean questionAccept) {
+    public void setQuestionAccept(Integer questionAccept) {
         this.questionAccept = questionAccept;
     }
+
+    
 
     public Integer getMemberId() {
         return memberId;
@@ -122,6 +126,16 @@ public class Question {
         this.questionContent = questionContent;
     }
 
+    public Question(Integer questionId, String subjectId, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
+        this.questionId = questionId;
+        this.subjectId = subjectId;
+        this.questionName = questionName;
+        this.questionDecription = questionDecription;
+        this.questionContent = questionContent;
+        this.questionDate = questionDate;
+        this.questionAccept = questionAccept;
+    }
+
     public Question(String subjectId, Integer memberId, String questionName, String questionDecription, String questionContent) {
         this.subjectId = subjectId;
         this.memberId = memberId;
@@ -129,7 +143,7 @@ public class Question {
         this.questionDecription = questionDecription;
         this.questionContent = questionContent;
     }
-    
+
     public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate) {
         this.questionId = questionId;
         this.subject = subject;
@@ -139,17 +153,29 @@ public class Question {
         this.questionContent = questionContent;
         this.questionDate = questionDate;
     }
+    
+    
+    public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
+        this.questionId = questionId;
+        this.subject = subject;
+        this.member = member;
+        this.questionName = questionName;
+        this.questionDecription = questionDecription;
+        this.questionContent = questionContent;
+        this.questionDate = questionDate;
+        this.questionAccept = questionAccept;
+    }
     public  Question(){
     }
     public  Question(Integer id){
         this.questionId= id;    
     }
-    public  Question(Integer questionId, boolean  AcceptQuestion){
+    public  Question(Integer questionId, Integer  AcceptQuestion){
         this.questionId = questionId;
         this.questionAccept = AcceptQuestion;
     }
     
-     public Question(Integer questionId, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, boolean questionAccept) {
+     public Question(Integer questionId, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
         this.questionId = questionId;
         this.member = member;
         this.questionName = questionName;
@@ -158,4 +184,5 @@ public class Question {
         this.questionDate = questionDate;
         this.questionAccept = questionAccept;
     }
+     
 }
