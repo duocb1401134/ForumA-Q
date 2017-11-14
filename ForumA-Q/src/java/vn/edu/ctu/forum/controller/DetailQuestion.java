@@ -18,6 +18,10 @@ import vn.edu.ctu.forum.models.service.AnwserServiceImpl;
 import vn.edu.ctu.forum.models.service.QuestionService;
 import vn.edu.ctu.forum.models.service.QuestionServiceImpl;
 import vn.edu.ctu.forum.models.pojos.Answer;
+import vn.edu.ctu.forum.models.pojos.Subject;
+import vn.edu.ctu.forum.models.service.QuestionServiceImpl;
+import vn.edu.ctu.forum.models.service.SubjectService;
+import vn.edu.ctu.forum.models.service.SubjectServiceImpl;
 
 /**
  *
@@ -26,15 +30,9 @@ import vn.edu.ctu.forum.models.pojos.Answer;
 @WebServlet(name = "DetailQuestion", urlPatterns = {"/detailQuestion"})
 public class DetailQuestion extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    SubjectService subjectService;
+    List<Subject> listSubject;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -48,10 +46,13 @@ public class DetailQuestion extends HttpServlet {
                 request.setAttribute("question", question);
                 AnwserService anwserService = new AnwserServiceImpl();
                 List<Answer> listAnswers = anwserService.findByIdQuesion(id);
-                if(listAnswers!=null){
+                SubjectService subjectService = new SubjectServiceImpl();
+                listSubject = subjectService.findAll();
+                if (listAnswers != null) {
+                    request.setAttribute("listSubject", listSubject);
                     request.setAttribute("listAnswers", listAnswers);
                 }
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 return;
             }
         }

@@ -8,18 +8,15 @@ package vn.edu.ctu.forum.models.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vn.edu.ctu.forum.models.dao.ImageDAO;
-import vn.edu.ctu.forum.models.dao.ImageDAOImpl;
 import vn.edu.ctu.forum.models.pojos.Subject;
 import vn.edu.ctu.forum.models.untils.ConnectionPool;
 import vn.edu.ctu.forum.models.dao.SubjectDAO;
 import vn.edu.ctu.forum.models.dao.SubjectDAOImpl;
 import vn.edu.ctu.forum.models.pojos.Image;
-import vn.edu.ctu.forum.models.pojos.Member;
+
 
 /**
  *
@@ -32,15 +29,17 @@ public class SubjectServiceImpl implements SubjectService {
     public SubjectServiceImpl() {
         this.subjectDAO = new SubjectDAOImpl();
     }
-
-    public ConnectionPool getConnection() {
-        return this.subjectDAO.getConnectionPool();
+     @Override
+    public ConnectionPool getConnectionPool() {
+         return this.subjectDAO.getConnectionPool();
     }
 
+    @Override
     public void releaseConnection() {
         this.subjectDAO.releaseConnection();
     }
 
+    @Override
     public void refreshConnectionPool() {
         this.subjectDAO.refreshConnectionPool();
     }
@@ -127,6 +126,5 @@ public class SubjectServiceImpl implements SubjectService {
             Logger.getLogger(MemberServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return b;
-    }
-
+    }   
 }

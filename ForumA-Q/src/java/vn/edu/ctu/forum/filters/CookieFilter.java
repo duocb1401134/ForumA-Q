@@ -6,9 +6,6 @@
 package vn.edu.ctu.forum.filters;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -50,7 +47,7 @@ public class CookieFilter implements Filter {
                     passMember = ck.getValue();
                 }
             }
-            System.out.println(emailMember+"__" + passMember);
+            
             if (!emailMember.equals("") || !passMember.equals("")) {
                 
                 MemberService mbs = new MemberServiceImpl();

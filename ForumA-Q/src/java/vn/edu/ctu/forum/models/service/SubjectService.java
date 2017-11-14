@@ -12,7 +12,7 @@ import vn.edu.ctu.forum.models.pojos.Image;
  *
  * @author PC
  */
-public interface SubjectService {
+public interface SubjectService extends BaseService{
     
     //them chu de
     public boolean addSubject(Subject sj, Image img);

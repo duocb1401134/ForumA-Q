@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 html, body{
     font-size: 100%;
     font-family: 'Open Sans', sans-serif;
-    background:#ffffff;
+    background:#FFFFFF;
     margin: 0;
 }
 p,ul li,ol li{
@@ -34,9 +34,10 @@ input[type="submit"],input[type="reset"],a,.w3ls_team_grid1_pos ul li{
 }
 /*-- event --*/
 .event-left1{
-    background: #F5F2F2;
+    background: #FFFFFF;
     padding: 5px;
     border-radius: 2px;
+    border: 2px solid #DBDBDB;
 }
 .event-left1-left{
     padding:0;

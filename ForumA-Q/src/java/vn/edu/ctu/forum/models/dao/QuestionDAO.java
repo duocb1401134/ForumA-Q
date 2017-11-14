@@ -41,7 +41,9 @@ public interface QuestionDAO extends BaseDAO {
     public ResultSet findByAccect();
 
     //Find ID Subject
-    public ResultSet findByidSubject(String id);
-
+    public ResultSet findByIdSubject(String id);
+    
+    public ResultSet findByIdSubject(String id, int litmit, int start);
+    
     public ResultSet find(int limit, int start);
 }

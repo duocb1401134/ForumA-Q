@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vn.edu.ctu.forum.models.pojos.Member;
 import vn.edu.ctu.forum.models.pojos.Question;
-import vn.edu.ctu.forum.models.untils.ConnectionPool;
 
 /**
  *
@@ -161,11 +159,11 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     }
 
     @Override
-    public ResultSet findByidSubject(String id) {
+    public ResultSet findByIdSubject(String id) {
         ResultSet kq;
         try {
             String sql = "SELECT * FROM"
-                    + " `subject` WHERE"
+                    + " `question` WHERE"
                     + " `subject_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, id);
@@ -178,13 +176,13 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         releaseConnection();
         return kq;
     }
-
+    
     @Override
     public boolean delAcceptQuestion(int id) {
         boolean kq;
         try {
             String sql = "UPDATE `question` SET `question_accept`=2 WHERE `question_id`=?";
-            PreparedStatement pre = this.connection.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
             kq = this.edit(pre);
         } catch (SQLException ex) {
@@ -200,7 +198,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         ResultSet kq;
         try {
             String sql = "SELECT * FROM `question` where `question_accept` = 1 ORDER BY `question_date` DESC LIMIT ? OFFSET ?";
-            PreparedStatement pre = this.connection.prepareCall(sql);
+            PreparedStatement pre = connection.prepareCall(sql);
             pre.setInt(1, limit);
             pre.setInt(2, start);
             kq = this.get(pre);
@@ -223,6 +221,24 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
             pre.setInt(1, id);
             kq= this.get(pre);
 
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = null;
+        }
+        releaseConnection();
+        return kq;
+    }
+
+    @Override
+    public ResultSet findByIdSubject(String id, int litmit, int start) {
+        ResultSet kq;
+        try {
+            String sql = "SELECT * FROM `question` where `question_accept` = 1 and `subject_id` =? ORDER BY `question_date` DESC LIMIT ? OFFSET ?";
+            PreparedStatement pre = QuestionDAOImpl.connection.prepareCall(sql);
+            pre.setString(1, id);
+            pre.setInt(2, litmit);
+            pre.setInt(3, start);
+            kq = this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             kq = null;

@@ -5,7 +5,6 @@
  */
 package vn.edu.ctu.forum.models.service;
 
-import java.sql.ResultSet;
 import java.util.List;
 import vn.edu.ctu.forum.models.pojos.Question;
 
@@ -34,6 +33,10 @@ public interface QuestionService extends BaseService{
     public boolean delAcceptQuestion(int id);
     //find limit
     public List<Question> find(int limit,int start);
+    
+    public int totalQuestionById(String subjectId);
+    
+    public List<Question> findBySubjectLimit(String subjectId, int limit, int start);
     
     public int totalQuestion();
 }

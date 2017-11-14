@@ -4,6 +4,7 @@
     Author     : NTD
 --%>
 
+<%@page import="vn.edu.ctu.forum.models.pojos.Subject"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="vn.edu.ctu.forum.models.service.ImageServiceImpl"%>
 <%@page import="vn.edu.ctu.forum.models.service.ImageService"%>
@@ -15,10 +16,10 @@
 <!DOCTYPE html>
 <%@include file="//template/header.jsp" %>
 <%@include file="//template/modall.jsp" %>
-<%    
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+<%    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     Question question = (Question) request.getAttribute("question");
-    List<Answer> listAnwser = (List<Answer>) request.getAttribute("listAnswers");    
+    List<Answer> listAnwser = (List<Answer>) request.getAttribute("listAnswers");
+    List<Subject> listSubject = (List<Subject>) request.getAttribute("listSubject");
 %>
 <div class="agile_inner_banner_info">
     <h2>Single</h2>
@@ -38,15 +39,15 @@
                 </ul>
                 <%=question.getQuestionContent()%>
             </div>        
-            <%if(listAnwser.size()>0){%>
+            <%if (listAnwser.size() > 0) {%>
             <div class="comments">
                 <h3>Our Recent Comments</h3>
                 <div class="comments-grids">
                     <%
-                        for(int i = 0; i< listAnwser.size();i++){                           
-                        ImageService imageService = new ImageServiceImpl();
-                        Image image = imageService.findByIdMember(listAnwser.get(i).getMember().getMemberId());
-                        
+                        for (int i = 0; i < listAnwser.size(); i++) {
+                            ImageService imageService = new ImageServiceImpl();
+                            Image image = imageService.findByIdMember(listAnwser.get(i).getMember().getMemberId());
+
                     %>
                     <div class="comments-grid">
                         <div class="comments-grid-left">
@@ -65,7 +66,8 @@
                     <%}%>
                 </div>
             </div>                
-            <%}if (member == null) {%>
+            <%}
+                if (member == null) {%>
             <div class="leave-coment-form">
                 <h3>Vui lòng đăng nhập để comment</h3>
             </div>
@@ -83,68 +85,13 @@
             <%}%>
         </div>
         <div class="col-md-4 event-right wthree-event-right">
-            <div class="event-right1 agileinfo-event-right1">
-                <div class="posts w3l-posts">
-                    <h3>Our Events</h3>
-                    <div class="posts-grids w3-posts-grids">
-                        <div class="posts-grid w3-posts-grid">
-                            <div class="posts-grid-left w3-posts-grid-left">
-                                <a href="single.html"><img src="images/1.jpg" alt=" " class="img-responsive" /></a>
-                            </div>
-                            <div class="posts-grid-right w3-posts-grid-right">
-                                <h4><a href="single.html">Sed ut perspiciatis unde omnis iste natus</a></h4>
-                                <ul class="wthree_blog_events_list">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>10/5/2017</li>
-                                    <li><i class="fa fa-user" aria-hidden="true"></i><a href="single.html">Admin</a></li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="posts-grid w3-posts-grid">
-                            <div class="posts-grid-left w3-posts-grid-left">
-                                <a href="single.html"><img src="images/6.jpg" alt=" " class="img-responsive" /></a>
-                            </div>
-                            <div class="posts-grid-right w3-posts-grid-right">
-                                <h4><a href="single.html">Neque porro quisquam qui dolorem</a></h4>
-                                <ul class="wthree_blog_events_list">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>12/5/2017</li>
-                                    <li><i class="fa fa-user" aria-hidden="true"></i><a href="single.html">Admin</a></li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="posts-grid w3-posts-grid">
-                            <div class="posts-grid-left w3-posts-grid-left">
-                                <a href="single.html"><img src="images/7.jpg" alt=" " class="img-responsive" /></a>
-                            </div>
-                            <div class="posts-grid-right w3-posts-grid-right">
-                                <h4><a href="single.html">Nemo enim ipsam voluptatem quia</a></h4>
-                                <ul class="wthree_blog_events_list">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>13/5/2017</li>
-                                    <li><i class="fa fa-user" aria-hidden="true"></i><a href="single.html">Admin</a></li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="event-right1 agileinfo-event-right1">                
                 <div class="tags tags1 w3layouts-tags">
                     <h3>Recent Tags</h3>
                     <ul>
-                        <li><a href="single.html">Designs</a></li>
-                        <li><a href="single.html">Growth</a></li>
-                        <li><a href="single.html">Latest</a></li>
-                        <li><a href="single.html">Price</a></li>
-                        <li><a href="single.html">Tools</a></li>
-                        <li><a href="single.html">Agile</a></li>
-                        <li><a href="single.html">Category</a></li>
-                        <li><a href="single.html">Themes</a></li>
-                        <li><a href="single.html">Growth</a></li>
-                        <li><a href="single.html">Agile</a></li>
-                        <li><a href="single.html">Price</a></li>
-                        <li><a href="single.html">Tools</a></li>
-                        <li><a href="single.html">Business</a></li>
-                        <li><a href="single.html">Category</a></li>
+                        <%for (int i = 0; i < listSubject.size(); i++) {%>                        
+                        <li><a href="view?subject=<%=listSubject.get(i).getSubjectId()%>"><%=listSubject.get(i).getSubjectName()%></a></li>
+                            <%}%>
                     </ul>
                 </div>
             </div>

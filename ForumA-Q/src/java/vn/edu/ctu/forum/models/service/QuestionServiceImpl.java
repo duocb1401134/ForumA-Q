@@ -60,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-  
+
     @Override
     public List<Question> findByIdMember(int id) {
         ResultSet rs = this.questionDAO.findByIdMember(id);
@@ -166,6 +166,7 @@ public class QuestionServiceImpl implements QuestionService {
 //        Question question = questionService.findById(11);
 //        System.out.println(question.getQuestionName());
 //    }
+
     @Override
     public boolean delAcceptQuestion(int id) {
         boolean rs = questionDAO.delAcceptQuestion(id);
@@ -176,6 +177,31 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> find(int limit, int start) {
         ResultSet rs = this.questionDAO.find(limit, start);
+        List<Question> listQuestion = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int questionID = rs.getInt("question_id");
+                String quesionName = rs.getString("question_name");
+                String questionDecription = rs.getString("question_decription");
+                String questionContent = rs.getString("question_content");
+                Date questionDate = rs.getDate("question_date");
+                memberService = new MemberServiceImpl();
+                Member m = memberService.findById(rs.getInt("member_id"));
+                subjectService = new SubjectServiceImpl();
+                Subject sb = subjectService.findById(rs.getString("subject_id"));
+                Question question = new Question(questionID, sb, m, quesionName, questionDecription, questionContent, questionDate);
+                listQuestion.add(question);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.questionDAO.releaseConnection();
+        return listQuestion;
+    }
+
+    @Override
+    public List<Question> findBySubjectLimit(String subjectId, int limit, int start) {
+        ResultSet rs = this.questionDAO.findByIdSubject(subjectId, limit, start);
         List<Question> listQuestion = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -212,4 +238,20 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionDAO.releaseConnection();
         return total;
     }
+
+    @Override
+    public int totalQuestionById(String subjectId) {
+        int total = 0;
+        try {
+
+            ResultSet rs = questionDAO.findByIdSubject(subjectId);
+            while (rs.next()) {
+                total++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
+    }
+
 }
