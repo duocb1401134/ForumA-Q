@@ -49,11 +49,11 @@ public class Register extends HttpServlet {
             member = memberService.findByEmail(email);
             HttpSession session = request.getSession();
             session.setAttribute("member", member);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("view");
         }
         else{
              request.setAttribute("erros_register","Email is exist! Please fill another email");
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("view");
             rd.forward(request, response);
         }
     }
