@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
 
         MemberService mbs = new MemberServiceImpl();
         Member m = mbs.login(email, pass);
-        System.out.println("Con text bach: " + request.getRequestURI());
+//        System.out.println("Con text bach: " + request.getRequestURI());
         if (m != null) {
             HttpSession session = request.getSession();
             session.setAttribute("member", m);
@@ -58,10 +58,10 @@ public class Login extends HttpServlet {
             }
             
             request.getContextPath();
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("view");
         } else {
             request.setAttribute("erros", "Email or PassWord incorrect");
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("view");
             rd.forward(request, response);
         }
     }

@@ -27,7 +27,19 @@
         <!-- //font-awesome-icons -->
         <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
         <link href="//fonts.googleapis.com/css?family=Raleway:100i,200,200i,300,400,500,500i,600,700,700i,800,800i" rel="stylesheet">
-
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".current_page").click(function () {
+                    var current_page = $(this).attr("page");
+                    $.post("listQuestionViewAjax", {page: current_page}, function (data) {
+                        $("#questionLoadAjax").html(data);
+                    });
+                    $("html, body").animate({scrollTop: 250}, "slow");
+                    return false;
+                });
+            });
+        </script>
     </head>
 
     <body>

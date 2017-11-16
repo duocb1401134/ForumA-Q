@@ -34,53 +34,54 @@
 </div>
 <div class="services">
     <div class="container">
-        <div class="col-md-8 event-left w3-agile-event-left">
+        <div class="col-md-8 event-left w3-agile-event-left" >
+            <span id="questionLoadAjax">
+                <% if (listQuestion.size() > 0)
+                        for (int i = 0; i < listQuestion.size(); i++) {
+                            if (i % 2 == 0) {
+                %>                 
 
-            <% if (listQuestion.size() > 0)
-                    for (int i = 0; i < listQuestion.size(); i++) {
-                        if(i%2==0){
-            %>
-                   
-            
-                 
-                    <div class="event-left1">
-                        <div class="col-xs-6 event-left1-left">
-                            <a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>">
-                                <img src="<%=listQuestion.get(i).getSubject().getImage().getImageSrc()%>" alt="<%=listQuestion.get(i).getSubject().getImage().getImageAlt()%>" class="img-responsive" /></a>
-                            <div class="event-left1-left-pos">
-                                <ul>                           
-                                    <li><a href="#"><span class="fa fa-user" aria-hidden="true"></span><%=listQuestion.get(i).getMember().getMemberName()%></a></li>
-                                </ul>
-                            </div>
+                <div class="event-left1">
+                    <div class="col-xs-6 event-left1-left">
+                        <a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>">
+                            <img src="<%=listQuestion.get(i).getSubject().getImage().getImageSrc()%>" alt="<%=listQuestion.get(i).getSubject().getImage().getImageAlt()%>" class="img-responsive" /></a>
+                        <div class="event-left1-left-pos">
+                            <ul>                           
+                                <li><a href="#"><span class="fa fa-user" aria-hidden="true"></span><%=listQuestion.get(i).getMember().getMemberName()%></a></li>
+                            </ul>
                         </div>
-                        <div class="col-xs-6 event-left1-right">
-                            <h4><%=dateFormat.format(listQuestion.get(i).getQuestionDate())%></h4>
-                            <h5><a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>"><%=listQuestion.get(i).getQuestionName()%></a></h5>
-                            <p><%=listQuestion.get(i).getQuestionDecription()%></p>
-                        </div>
-                        <div class="clearfix"> </div>
                     </div>
-             <%}else{%>
-               
-                    <div class="event-left1">
-                        <div class="col-xs-6 event-left1-right">
-                            <h4><%=dateFormat.format(listQuestion.get(i).getQuestionDate())%></h4>
-                            <h5><a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>"><%=listQuestion.get(i).getQuestionName()%></a></h5>
-                            <p><%=listQuestion.get(i).getQuestionDecription()%></p>
-                        </div>
-                        <div class="col-xs-6 event-left1-left agileinfo-event-left1-left">
-                            <a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>">
-                                <img src="<%=listQuestion.get(i).getSubject().getImage().getImageSrc()%>" alt="<%=listQuestion.get(i).getSubject().getImage().getImageAlt()%>" class="img-responsive" /></a>
-                            <div class="event-left1-left-pos">
-                                <ul>                           
-                                    <li><a href="#"><span class="fa fa-user" aria-hidden="true"></span><%=listQuestion.get(i).getMember().getMemberName()%></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="clearfix"> </div>
+                    <div class="col-xs-6 event-left1-right">
+                        <h4><%=dateFormat.format(listQuestion.get(i).getQuestionDate())%></h4>
+                        <h5><a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>"><%=listQuestion.get(i).getQuestionName()%></a></h5>
+                        <p><%=listQuestion.get(i).getQuestionDecription()%></p>
+                        
                     </div>
-            
-            <%}}%>
+                    <div class="clearfix"> </div>
+                </div>
+                <%} else {%>
+
+                <div class="event-left1">
+                    <div class="col-xs-6 event-left1-right">
+                        <h4><%=dateFormat.format(listQuestion.get(i).getQuestionDate())%></h4>
+                        <h5><a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>"><%=listQuestion.get(i).getQuestionName()%></a></h5>
+                        <p><%=listQuestion.get(i).getQuestionDecription()%></p>
+                    </div>
+                    <div class="col-xs-6 event-left1-left agileinfo-event-left1-left">
+                        <a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>">
+                            <img src="<%=listQuestion.get(i).getSubject().getImage().getImageSrc()%>" alt="<%=listQuestion.get(i).getSubject().getImage().getImageAlt()%>" class="img-responsive" /></a>
+                        <div class="event-left1-left-pos">
+                            <ul>                           
+                                <li><a href="#"><span class="fa fa-user" aria-hidden="true"></span><%=listQuestion.get(i).getMember().getMemberName()%></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </span>
+
+            <%}
+                }%>
             <nav class="paging1">
                 <ul class="pagination paging">
                     <%
@@ -95,7 +96,7 @@
                         </a>
                     </li>
                     <% for (int i = 1; i <= totalPage; i++) {%>
-                    <li><a href="view?page=<%=i%>"><%=i%></a></li>                    
+                    <li><span class="current_page" page = "<%=i%>"><%=i%></span></li>                    
                         <%}%>
                     <li>
                         <a href="view?next=<%=pageCurent%>" aria-label="Next">

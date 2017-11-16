@@ -51,7 +51,7 @@
         <header class="header fixed-top clearfix">
             <!--logo start-->
             <div class="brand">
-                <a href="index.jsp" class="logo">
+                <a href="view" class="logo">
                     Forum A&Q
                 </a>
                 <div class="sidebar-toggle-box">
