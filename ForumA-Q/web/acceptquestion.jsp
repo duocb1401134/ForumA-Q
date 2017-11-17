@@ -3,6 +3,7 @@
     Created on : Oct 21, 2017, 1:32:33 PM
     Author     : Administrator
 --%>
+<%@page import="vn.edu.ctu.forum.models.service.MemberServiceImpl"%>
 <%@page import="java.util.List"%>
 <%@page import="vn.edu.ctu.forum.models.service.QuestionServiceImpl"%>
 <%@page import="vn.edu.ctu.forum.controller.AcceptQuestion"%>
@@ -19,16 +20,17 @@
                 </div>
                 <div>
                     <%
-                      
+                        MemberServiceImpl mbsv = new MemberServiceImpl();
                         QuestionServiceImpl qssv = new QuestionServiceImpl();
                         List<Question> list1 = qssv.findByAccect();
+                        Member mb ;
                     %>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th data-breakpoints="xs">ID Question</th>
                                 <th>ID Supject</th>
-                                <th>ID Member</th>
+                                <th>Member Name</th>
                                 <th>Question Name</th>
                                 <th>Discription</th>
                                 <th>Content</th>
@@ -41,7 +43,8 @@
                             <tr data-expanded="true">
                                 <td><%=list1.get(i).getQuestionId() %></td>
                                 <td><%=list1.get(i).getSubjectId()  %></td>
-                                <td><%=list1.get(i).getMemberId()  %></td>
+                                <% mb = new MemberServiceImpl().findById(list1.get(i).getMemberId()); %>
+                                <td><%=mb.getMemberName()  %></td>
                                 <td><%=list1.get(i).getQuestionId()  %></td>
                                 <td><%= list1.get(i).getQuestionDecription()  %></td>
                                 <td><%= list1.get(i).getQuestionDate()  %></td>
