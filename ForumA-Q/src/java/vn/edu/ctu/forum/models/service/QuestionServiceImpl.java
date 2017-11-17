@@ -97,8 +97,8 @@ public class QuestionServiceImpl implements QuestionService {
                     SubjectService ss = new SubjectServiceImpl();
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
-                    Question qt = new Question(rs.getInt("question_id"),
-                            member, rs.getString("question_name"), rs.getString("question_decription"),
+                    Question qt = new Question(rs.getInt("question_id"),rs.getString("subject_id"),
+                            rs.getInt("member_id"), rs.getString("question_name"), rs.getString("question_decription"),
                             rs.getString("question_content"), rs.getDate("question_date"), rs.getInt("question_accept"));
                     listQuestion.add(qt);
                 } catch (SQLException ex) {

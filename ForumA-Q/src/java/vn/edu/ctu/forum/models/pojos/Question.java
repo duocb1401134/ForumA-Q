@@ -23,6 +23,10 @@ public class Question {
     private Date questionDate;
     private Integer questionAccept;
 
+    public Question(int aInt, String string, int aInt0, String string0, String string1, String string2, java.sql.Date date, boolean aBoolean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 
     public Integer getQuestionId() {
@@ -184,5 +188,14 @@ public class Question {
         this.questionDate = questionDate;
         this.questionAccept = questionAccept;
     }
-     
+     public Question(Integer questionId, String subject, Integer member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
+        this.questionId = questionId;
+        this.subjectId = subject;
+        this.memberId = member;
+        this.questionName = questionName;
+        this.questionDecription = questionDecription;
+        this.questionContent = questionContent;
+        this.questionDate = questionDate;
+        this.questionAccept = questionAccept;
+    }
 }
