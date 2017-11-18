@@ -135,7 +135,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
                 + " `question_content`, `question_date`, `question_accept`"
                 + " FROM `question` WHERE `question_accept`=0";
 
-        kq =  this.get(sql);
+        kq = this.get(sql);
         releaseConnection();
         return kq;
     }
@@ -167,7 +167,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
                     + " `subject_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, id);
-            kq=  this.get(pre);
+            kq = this.get(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,7 +176,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         releaseConnection();
         return kq;
     }
-    
+
     @Override
     public boolean delAcceptQuestion(int id) {
         boolean kq;
@@ -219,7 +219,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
                     + " `question_id`=?";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
-            kq= this.get(pre);
+            kq = this.get(pre);
 
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -246,4 +246,39 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         releaseConnection();
         return kq;
     }
+
+    @Override
+    public ResultSet search(String[] searchs, int litmit, int start) {
+        ResultSet kq=null;
+        PreparedStatement pre;
+        String sql = "SELECT * FROM `question` where `question_accept` = 1";
+        for (String search : searchs) {
+            sql += " and `question_name` like N'%" + search + "%'";
+        }
+        sql += " ORDER BY `question_date` LIMIT ? OFFSET ?";
+        
+        try {
+            pre = QuestionDAOImpl.connection.prepareCall(sql);
+            pre.setInt(1, litmit);
+            pre.setInt(2, start);
+            kq = this.get(pre);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        releaseConnection();
+        return kq;
+    }
+//    public static void main(String[] args) {
+//        String[] searchs = "thuc hien truy van".split(" ");
+//        QuestionDAO aO= new QuestionDAOImpl();
+//        ResultSet rs = aO.search(searchs, 4,0);
+//        try {
+//            while(rs.next()){
+//                System.out.println(rs.getString(4));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

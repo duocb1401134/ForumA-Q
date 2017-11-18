@@ -38,5 +38,7 @@ public interface QuestionService extends BaseService{
     
     public List<Question> findBySubjectLimit(String subjectId, int limit, int start);
     
+    public List<Question> search(String[] search);
+    
     public int totalQuestion();
 }

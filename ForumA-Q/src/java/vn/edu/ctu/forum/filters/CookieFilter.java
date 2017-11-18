@@ -33,7 +33,7 @@ public class CookieFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+        
         HttpServletRequest req = (HttpServletRequest) request;
         String emailMember = "";
         String passMember = "";
@@ -55,6 +55,7 @@ public class CookieFilter implements Filter {
                 
                 if (m != null) {
                     HttpSession session = req.getSession();
+                    session.removeAttribute("member");
                     session.setAttribute("member", m);
                 }
                 

@@ -20,7 +20,7 @@ import vn.edu.ctu.forum.models.untils.ConnectionPoolImpl;
  */
 public class BaseDAOImpl implements BaseDAO {
 
-    private  static ConnectionPool connectionPool = new ConnectionPoolImpl();
+    private static final ConnectionPool connectionPool = new ConnectionPoolImpl();
     protected static Connection connection;
 
     // Contructor co tham so truyen vao la doi tuong ConnectionPool
@@ -29,11 +29,11 @@ public class BaseDAOImpl implements BaseDAO {
         
         try {
             
-            this.connection = connectionPool.getConnectionPool();
+          connection = connectionPool.getConnectionPool();
 
             // Set AutoCommit la false de thuc hien commit bang tay
-            if (this.connection.getAutoCommit()) {
-                this.connection.setAutoCommit(false);
+            if (connection.getAutoCommit()) {
+               connection.setAutoCommit(false);
             }
         } catch (SQLException e) {
         }
@@ -46,14 +46,14 @@ public class BaseDAOImpl implements BaseDAO {
 
                 int numRow = pre.executeUpdate();
                 if (numRow == 0) {
-                    this.connection.rollback();
+                    connection.rollback();
                 } else {
-                    this.connection.commit();
+                    connection.commit();
                     return true;
                 }
             } catch (SQLException ex) {
                 try {
-                    this.connection.rollback();
+                    connection.rollback();
                     Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex1) {
                     Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex1);
@@ -93,7 +93,7 @@ public class BaseDAOImpl implements BaseDAO {
     @Override
     public ResultSet get(String sql) {
         try {
-            PreparedStatement pre = this.connection.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql);
             return this.get(pre);
         } catch (SQLException ex) {
             Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,14 +115,14 @@ public class BaseDAOImpl implements BaseDAO {
 //    }
     @Override
     public ConnectionPool getConnectionPool() {
-        return this.connectionPool;
+        return connectionPool;
     }
 
     @Override
     public void releaseConnection() {
 
         try {
-            this.connectionPool.releaseConnection(connection);
+            connectionPool.releaseConnection(connection);
         } catch (SQLException ex) {
             Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,7 +131,7 @@ public class BaseDAOImpl implements BaseDAO {
 
     @Override
     public void refreshConnectionPool() {
-        this.connectionPool.refreshConnectionPool();
+        connectionPool.refreshConnectionPool();
     }
 
 //    public static void main(String[] args) {
@@ -145,9 +145,9 @@ public class BaseDAOImpl implements BaseDAO {
             try {
                 int numRow = pre.executeUpdate();
                 if (numRow == 0) {
-                    this.connection.rollback();
+                    connection.rollback();
                 } else {
-                    this.connection.commit();
+                    connection.commit();
                     ResultSet rs = pre.getGeneratedKeys();
                     while(rs.next()){
                         return rs.getInt(1);
@@ -155,7 +155,7 @@ public class BaseDAOImpl implements BaseDAO {
                 }
             } catch (SQLException ex) {
                 try {
-                    this.connection.rollback();
+                    connection.rollback();
                     Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex1) {
                     Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex1);

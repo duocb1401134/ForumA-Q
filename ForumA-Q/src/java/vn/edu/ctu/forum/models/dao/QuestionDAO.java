@@ -46,4 +46,6 @@ public interface QuestionDAO extends BaseDAO {
     public ResultSet findByIdSubject(String id, int litmit, int start);
     
     public ResultSet find(int limit, int start);
+    
+    public ResultSet search(String[] search,int litmit, int start);
 }

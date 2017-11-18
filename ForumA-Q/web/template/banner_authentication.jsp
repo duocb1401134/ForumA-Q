@@ -20,22 +20,12 @@
             <h1><a class="navbar-brand" href="view"><i class="fa fa-crosshairs" aria-hidden="true"></i> Forum A&Q</a></h1>
 
         </div>
-        <ul class="agile_forms">                    
+        <ul class="agile_forms">              
+            <li><a href="profileMember.jsp">Profile</a></li>
+            <li><a href="my_questions.jsp"> Make Question </a></li>
             <li><a class="active" href="logout"><span class="fa fa-sign-out"></span> Logout</a> </li>
         </ul>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-            <nav>
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle hvr-underline-from-center" data-toggle="dropdown"><b class="fa fa-caret-down"></b></a>
-                        <ul class="dropdown-menu agile_short_dropdown">                           
-                            <li><a href="profileMember.jsp">Profile</a></li>
-                        </ul>
-                    </li>                            
-                </ul>
-            </nav>
-        </div>
     </nav>
     <div class="clearfix"> </div> 
 </div>

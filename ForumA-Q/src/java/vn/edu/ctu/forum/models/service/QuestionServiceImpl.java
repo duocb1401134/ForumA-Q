@@ -254,4 +254,28 @@ public class QuestionServiceImpl implements QuestionService {
         return total;
     }
 
+    @Override
+    public List<Question> search(String[] search) {
+        ResultSet rs = this.questionDAO.search(search,4,0);
+        List<Question> listQuestion = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int questionID = rs.getInt("question_id");
+                String quesionName = rs.getString("question_name");
+                String questionDecription = rs.getString("question_decription");
+                String questionContent = rs.getString("question_content");
+                Date questionDate = rs.getDate("question_date");
+                memberService = new MemberServiceImpl();
+                Member m = memberService.findById(rs.getInt("member_id"));
+                subjectService = new SubjectServiceImpl();
+                Subject sb = subjectService.findById(rs.getString("subject_id"));
+                Question question = new Question(questionID, sb, m, quesionName, questionDecription, questionContent, questionDate);
+                listQuestion.add(question);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.questionDAO.releaseConnection();
+        return listQuestion;
+    }
 }

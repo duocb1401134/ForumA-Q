@@ -32,6 +32,7 @@
     <h2>AA</h2>
     <p>Add Some Short Description</p>
 </div>
+
 <div class="services">
     <div class="container">
         <div class="col-md-8 event-left w3-agile-event-left" >
@@ -55,7 +56,7 @@
                         <h4><%=dateFormat.format(listQuestion.get(i).getQuestionDate())%></h4>
                         <h5><a href="detailQuestion?questionId=<%=listQuestion.get(i).getQuestionId()%>"><%=listQuestion.get(i).getQuestionName()%></a></h5>
                         <p><%=listQuestion.get(i).getQuestionDecription()%></p>
-                        
+
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -108,6 +109,12 @@
         </div>
 
         <div class="col-md-4 event-right wthree-event-right">
+            <div class="search1 agileits-search1">
+                <form action="view" method="post">
+                    <input type="search" name="Search" placeholder="Search here..." required=""/>
+                    <input type="submit" value="Search"/>
+                </form>
+            </div>
             <div class="">                      
                 <div class="tags tags1">
                     <h3>Recent Tags</h3>

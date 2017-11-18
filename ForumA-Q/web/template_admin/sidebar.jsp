@@ -19,12 +19,12 @@
                     <ul class="sub">
                         <li><a href="profileMember.jsp">Update Information</a></li>
                         <li><a href="updateAvatarMember.jsp">Update Avatar</a></li>
-                        <li><a href="changePassWord.jsp">Chage PassWord</a></li>
+                        <li><a href="changePassWord.jsp">Change PassWord</a></li>
                     </ul>
                 </li>
                 <%
                     Member member3 = (Member) request.getSession().getAttribute("member");
-                   if(member3.isMemberIsAdmin()){               
+                    if (member3.isMemberIsAdmin()) {
                 %>
                 <li class="sub-menu">
                     <a href="javascript:;">                        
@@ -37,14 +37,14 @@
                     </ul>
                 </li>                
                 <%
-                }
+                    }
                 %>
                 <li>
-                            <a href="my_questions.jsp">
-                                <i class="fa fa-bullhorn"></i>
-                                <span>Question </span>
-                            </a>
-                        </li>
+                    <a href="my_questions.jsp">
+                        <i class="fa fa-bullhorn"></i>
+                        <span>Question</span>
+                    </a>
+                </li>
             </ul>            
         </div>
         <!-- sidebar menu end-->

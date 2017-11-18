@@ -39,7 +39,9 @@ public class View extends HttpServlet {
     Integer totalPage = 0;
     int page;
     String subjectID;
-SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    String searchString;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -57,9 +59,15 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String queryString = request.getQueryString();
+        searchString = request.getParameter("Search");
         if (queryString == null) {
-            defaultView(request, response);
+            if (searchString != null) {
+                search(request, response);
+            } else {
+                defaultView(request, response);
+            }
         } else {
             if (queryString.contains("page")) {
                 page = coverValue(request.getParameter("page"));
@@ -82,7 +90,19 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 subjectID = request.getParameter("subject");
                 viewSubjectId(request, response);
             }
+
         }
+
+    }
+
+    private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] arrSearch = searchString.split(" ");
+        listQuestion = questionService.search(arrSearch);
+        request.setAttribute("listQuestion", listQuestion);
+        request.setAttribute("totalPage", totalPage());
+        request.setAttribute("listSubject", getListSubject());
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
     }
 
     private int coverValue(String value) {
@@ -110,57 +130,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
     }
-    private String teamplate(int currentPage) {
-        
-        String outString = "";
-        if (listQuestion.size() > 0) {
-            for (int i = 0; i < listQuestion.size(); i++) {
 
-                if (i % 2 == 0) {
-                    outString += "<div class=\"event-left1\">\n"
-                            + "                        <div class=\"col-xs-6 event-left1-left\">\n"
-                            + "                            <a href=\"detailQuestion?questionId=" + listQuestion.get(i).getQuestionId() + "\">\n"
-                            + "                                <img src=\"" + listQuestion.get(i).getSubject().getImage().getImageSrc() + "\" alt=\"" + listQuestion.get(i).getSubject().getImage().getImageAlt() + "\" class=\"img-responsive\" /></a>\n"
-                            + "                            <div class=\"event-left1-left-pos\">\n"
-                            + "                                <ul>                           \n"
-                            + "                                    <li><a href=\"#\"><span class=\"fa fa-user\" aria-hidden=\"true\"></span>" + listQuestion.get(i).getMember().getMemberName() + "</a></li>\n"
-                            + "                                </ul>\n"
-                            + "                            </div>\n"
-                            + "                        </div>\n"
-                            + "                        <div class=\"col-xs-6 event-left1-right\">\n"
-                            + "                            <h4>" + dateFormat.format(listQuestion.get(i).getQuestionDate()) + "</h4>\n"
-                            + "                            <h5><a href=\"detailQuestion?questionId=" + listQuestion.get(i).getQuestionId() + "\">" + listQuestion.get(i).getQuestionName() + "</a></h5>\n"
-                            + "                            <p>" + listQuestion.get(i).getQuestionDecription() + "</p>\n"
-                            + "                        </div>\n"
-                            + "                        <div class=\"clearfix\"> </div>\n"
-                            + "                    </div>\n";
-                } else {
-
-                    outString += "   <div class=\"event-left1\">\n"
-                            + "                        <div class=\"col-xs-6 event-left1-right\">\n"
-                            + "                            <h4>" + dateFormat.format(listQuestion.get(i).getQuestionDate()) + "</h4>\n"
-                            + "                            <h5><a href=\"detailQuestion?questionId=" + listQuestion.get(i).getQuestionId() + "\">" + listQuestion.get(i).getQuestionName() + "</a></h5>\n"
-                            + "                            <p>" + listQuestion.get(i).getQuestionDecription() + "</p>\n"
-                            + "                        </div>\n"
-                            + "                        <div class=\"col-xs-6 event-left1-left agileinfo-event-left1-left\">\n"
-                            + "                            <a href=\"detailQuestion?questionId=" + listQuestion.get(i).getQuestionId() + "\">\n"
-                            + "                                <img src=\"" + listQuestion.get(i).getSubject().getImage().getImageSrc() + "\" alt=\"" + listQuestion.get(i).getSubject().getImage().getImageAlt() + "\" class=\"img-responsive\" /></a>\n"
-                            + "                            <div class=\"event-left1-left-pos\">\n"
-                            + "                                <ul>                           \n"
-                            + "                                    <li><a href=\"#\"><span class=\"fa fa-user\" aria-hidden=\"true\"></span>" + listQuestion.get(i).getMember().getMemberName() + "</a></li>\n"
-                            + "                                </ul>\n"
-                            + "                            </div>\n"
-                            + "                        </div>\n"
-                            + "                        <div class=\"clearfix\"> </div>\n"
-                            + "                    </div>";
-                }
-
-            }
-        }
-        return outString;
-    }
-
-    
     private void viewSubjectId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         listQuestion = questionService.findBySubjectLimit(subjectID, limit, 0);
         request.setAttribute("listQuestion", listQuestion);

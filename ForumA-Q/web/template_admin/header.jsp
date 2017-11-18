@@ -33,7 +33,6 @@
     <script src="<%=request.getContextPath()%>/ckeditor/ckeditor.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/ckfinder/ckfinder.js" type="text/javascript"></script>
     <script src="js/jquery2.0.3.min.js"></script>
-
     <script src="./ckeditor/ckeditor.js" type="text/javascript"></script>
     <!-- date picker -->
     <link href="css_admin/datepicker.css" rel="stylesheet" type="text/css"/>    
