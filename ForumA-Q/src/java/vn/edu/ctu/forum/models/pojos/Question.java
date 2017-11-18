@@ -12,22 +12,28 @@ import java.util.Date;
  * @author Ew
  */
 public class Question {
+
     private Integer questionId;
     private Subject subject;
     private String subjectId;
     private Member member;
-    private Integer memberId;   
+    private Integer memberId;
     private String questionName;
     private String questionDecription;
     private String questionContent;
     private Date questionDate;
     private Integer questionAccept;
+    private Integer vote;
 
-    public Question(int aInt, String string, int aInt0, String string0, String string1, String string2, java.sql.Date date, boolean aBoolean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    
+    public Integer getVote() {
+        return vote;
     }
 
-
+    public void setVote(Integer vote) {
+        this.vote = vote;
+    }
 
     public Integer getQuestionId() {
         return questionId;
@@ -93,8 +99,6 @@ public class Question {
         this.questionAccept = questionAccept;
     }
 
-    
-
     public Integer getMemberId() {
         return memberId;
     }
@@ -118,8 +122,6 @@ public class Question {
         this.questionDecription = questionDecription;
         this.questionContent = questionContent;
     }
-    
-    
 
     public Question(Integer questionId, String subjectId, Integer memberId, String questionName, String questionDecription, String questionContent) {
         this.questionId = questionId;
@@ -157,9 +159,8 @@ public class Question {
         this.questionContent = questionContent;
         this.questionDate = questionDate;
     }
-    
-    
-    public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
+
+    public Question(Integer questionId, Subject subject, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept, Integer questionVote) {
         this.questionId = questionId;
         this.subject = subject;
         this.member = member;
@@ -168,18 +169,22 @@ public class Question {
         this.questionContent = questionContent;
         this.questionDate = questionDate;
         this.questionAccept = questionAccept;
+        this.vote = questionVote;
     }
-    public  Question(){
+
+    public Question() {
     }
-    public  Question(Integer id){
-        this.questionId= id;    
+
+    public Question(Integer id) {
+        this.questionId = id;
     }
-    public  Question(Integer questionId, Integer  AcceptQuestion){
+
+    public Question(Integer questionId, Integer AcceptQuestion) {
         this.questionId = questionId;
         this.questionAccept = AcceptQuestion;
     }
-    
-     public Question(Integer questionId, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
+
+    public Question(Integer questionId, Member member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
         this.questionId = questionId;
         this.member = member;
         this.questionName = questionName;
@@ -188,7 +193,8 @@ public class Question {
         this.questionDate = questionDate;
         this.questionAccept = questionAccept;
     }
-     public Question(Integer questionId, String subject, Integer member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
+
+    public Question(Integer questionId, String subject, Integer member, String questionName, String questionDecription, String questionContent, Date questionDate, Integer questionAccept) {
         this.questionId = questionId;
         this.subjectId = subject;
         this.memberId = member;

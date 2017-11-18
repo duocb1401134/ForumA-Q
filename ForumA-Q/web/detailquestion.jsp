@@ -39,8 +39,22 @@
                 </ul>
                 <%=question.getQuestionContent()%>
             </div>        
+            <br/>
+
+            <div class="event-left1-left">
+
+                <div class="event-left1-left-pos">
+                    <ul>
+
+                        <input id="qsid" type="hidden" value="<%=question.getQuestionId()%>"></input>
+                        <li><a href="" id="llike"><span id="iconlike" class="fa fa-thumbs-up" aria-hidden="true"></span><b id="qsvt"><%=question.getVote()%></b> Likes</a></li>
+                        <li><a href="#comment"><span class="fa fa-user" aria-hidden="true"></span><b>Comment</b></a></li>
+                    </ul>
+                </div>
+            </div><br/>
+            
             <%if (listAnwser.size() > 0) {%>
-            <div class="comments">
+            <div class="comments" id="comment">
                 <h3>Our Recent Comments</h3>
                 <div class="comments-grids">
                     <%

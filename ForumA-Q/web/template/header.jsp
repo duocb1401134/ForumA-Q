@@ -30,12 +30,52 @@
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
+                var action = true;
+                var qsvt = new Number($('#qsvt').text());
                 $(".current_page").click(function () {
                     var current_page = $(this).attr("page");
                     $.post("listQuestionViewAjax", {page: current_page}, function (data) {
                         $("#questionLoadAjax").html(data);
                     });
                     $("html, body").animate({scrollTop: 250}, "slow");
+                    return false;
+                });
+                $('#llike').click(function () {
+                    var qsid = $('#qsid').val();
+                    if (action) {
+                        $.ajax({
+
+                            type: "GET",
+
+                            url: "likeUp",
+
+                            data: {qsid: qsid, qsvt: qsvt},
+
+                            success: function (responseText) {
+                                $('#qsvt').text(responseText);
+                                $("#iconlike").toggleClass('fa-thumbs-up fa-thumbs-down');
+                                action = false;
+                                qsvt = qsvt + 1;
+                            }
+                        });
+                    } else {
+                        $.ajax({
+
+                            type: "GET",
+
+                            url: "likeDown",
+
+                            data: {qsid: qsid, qsvt: qsvt},
+
+                            success: function (responseText) {
+                                $('#qsvt').text(responseText);
+                                $("#iconlike").toggleClass('fa-thumbs-up fa-thumbs-down');
+                                action = true;
+                                qsvt = qsvt - 1;
+                            }
+                        });
+
+                    }
                     return false;
                 });
             });

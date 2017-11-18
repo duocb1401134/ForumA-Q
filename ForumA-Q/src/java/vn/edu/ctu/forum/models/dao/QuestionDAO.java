@@ -22,6 +22,10 @@ public interface QuestionDAO extends BaseDAO {
 
     //Accept Question
     public boolean editQuestionAccept(int id);
+    
+    public boolean voteUp(int id, int vote);
+
+    public boolean voteDown(int id, int vote);
 
     //Xoa Question
     public boolean delQuetion(int id);

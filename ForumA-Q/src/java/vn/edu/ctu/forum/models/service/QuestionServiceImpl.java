@@ -51,6 +51,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public boolean voteUp(int id, int vote) {
+        boolean rs = questionDAO.voteUp(id, vote);
+        return rs;
+    }
+
+    @Override
+    public boolean voteDown(int id, int vote) {
+        boolean rs = questionDAO.voteDown(id, vote);
+        return rs;
+    }
+
+    @Override
     public boolean delQuetion(int id) {
         boolean rs = questionDAO.delQuetion(id);
         return rs;
@@ -97,7 +109,7 @@ public class QuestionServiceImpl implements QuestionService {
                     SubjectService ss = new SubjectServiceImpl();
 //                    Subject subject = ss.findById(rs.getString("suject_id"));
                     Member member = mb.findById(rs.getInt("member_id"));
-                    Question qt = new Question(rs.getInt("question_id"),rs.getString("subject_id"),
+                    Question qt = new Question(rs.getInt("question_id"), rs.getString("subject_id"),
                             rs.getInt("member_id"), rs.getString("question_name"), rs.getString("question_decription"),
                             rs.getString("question_content"), rs.getDate("question_date"), rs.getInt("question_accept"));
                     listQuestion.add(qt);
@@ -149,12 +161,14 @@ public class QuestionServiceImpl implements QuestionService {
                 String quesionName = rs.getString("question_name");
                 String questionDecription = rs.getString("question_decription");
                 String questionContent = rs.getString("question_content");
+                Integer questionvote = rs.getInt("vote");
+                Integer questionaccept = rs.getInt("question_accept");
                 Date questionDate = rs.getDate("question_date");
                 memberService = new MemberServiceImpl();
                 Member m = memberService.findById(rs.getInt("member_id"));
                 subjectService = new SubjectServiceImpl();
                 Subject sb = subjectService.findById(rs.getString("subject_id"));
-                question = new Question(questionID, sb, m, quesionName, questionDecription, questionContent, questionDate);
+                question = new Question(questionID, sb, m, quesionName, questionDecription, questionContent, questionDate, questionaccept, questionvote);
             }
         } catch (SQLException ex) {
             Logger.getLogger(QuestionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,7 +270,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> search(String[] search) {
-        ResultSet rs = this.questionDAO.search(search,4,0);
+        ResultSet rs = this.questionDAO.search(search, 4, 0);
         List<Question> listQuestion = new ArrayList<>();
         try {
             while (rs.next()) {

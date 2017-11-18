@@ -53,6 +53,44 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     }
 
     @Override
+    public boolean voteUp(int id, int vote) {
+        boolean kq;
+        try {
+            Question question = new Question(id);
+            String sql = "UPDATE `question` SET `vote`= ? WHERE `question_id` = ?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, vote + 1);
+            pre.setInt(2, id);
+            kq = this.edit(pre);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
+        }
+        refreshConnectionPool();
+        return kq;
+    }
+
+    @Override
+    public boolean voteDown(int id, int vote) {
+        boolean kq;
+        try {
+            Question question = new Question(id);
+            String sql = "UPDATE `question` SET `vote`= ? WHERE `question_id` = ?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, vote - 1);
+            pre.setInt(2, id);
+            kq = this.edit(pre);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            kq = false;
+        }
+        refreshConnectionPool();
+        return kq;
+    }
+
+    @Override
     public boolean editQuetion(Question question) {
         boolean kq;
         try {
@@ -249,23 +287,23 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
 
     @Override
     public ResultSet search(String[] searchs, int litmit, int start) {
-        ResultSet kq=null;
+        ResultSet kq = null;
         PreparedStatement pre;
         String sql = "SELECT * FROM `question` where `question_accept` = 1";
         for (String search : searchs) {
             sql += " and `question_name` like N'%" + search + "%'";
         }
         sql += " ORDER BY `question_date` LIMIT ? OFFSET ?";
-        
+
         try {
             pre = QuestionDAOImpl.connection.prepareCall(sql);
             pre.setInt(1, litmit);
             pre.setInt(2, start);
             kq = this.get(pre);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
         releaseConnection();
         return kq;
     }
