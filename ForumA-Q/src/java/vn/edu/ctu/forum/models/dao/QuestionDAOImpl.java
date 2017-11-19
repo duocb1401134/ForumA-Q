@@ -247,7 +247,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         releaseConnection();
         return kq;
     }
-
+    
     @Override
     public ResultSet findById(int id) {
         ResultSet kq;

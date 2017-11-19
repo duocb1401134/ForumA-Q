@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vn.edu.ctu.forum.models.pojos.Image;
-import vn.edu.ctu.forum.models.untils.ConnectionPool;
 
 /**
  *
@@ -29,7 +28,7 @@ public class ImageDAOImpl extends BaseDAOImpl implements ImageDAO {
         boolean kq;
         try {
             String sql = "INSERT INTO `image`(`image_alt`, `image_src`, `image_date_upload`) VALUES (?,?,now())";
-            PreparedStatement pre = this.connection.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, im.getImageAlt());
             pre.setString(2, im.getImageSrc());
             kq = this.add(pre);
@@ -37,7 +36,7 @@ public class ImageDAOImpl extends BaseDAOImpl implements ImageDAO {
             Logger.getLogger(ImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             kq = false;
         }
-        refreshConnectionPool();
+        releaseConnection();
         return kq;
     }
 
@@ -62,7 +61,7 @@ public class ImageDAOImpl extends BaseDAOImpl implements ImageDAO {
         Integer kq;
         try {
             String sql = "INSERT INTO `image`(`image_alt`, `image_src`, `image_date_upload`) VALUES (?,?,now())";
-            PreparedStatement pre = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pre = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setString(1, img.getImageAlt());
             pre.setString(2, img.getImageSrc());
             kq = this.addGetLastID(pre);
@@ -70,7 +69,7 @@ public class ImageDAOImpl extends BaseDAOImpl implements ImageDAO {
             Logger.getLogger(ImageDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             kq = 0;
         }
-        refreshConnectionPool();
+        releaseConnection();        
         return kq;
     }
 

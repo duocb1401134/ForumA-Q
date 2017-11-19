@@ -20,12 +20,25 @@
 <!DOCTYPE html>
 <%@include file="//template/header.jsp" %>
 <%@include file="//template/modall.jsp" %>
+
+<script>
+    $(document).ready(function () {
+        $(".current_page").click(function () {
+            var current_page = $(this).attr("page");           
+            $("#questionLoadAjax").detach();
+            $.post("listQuestionViewAjax", {page: current_page}, function (data) {   
+                alert(data);
+                $("#questionLoadAjax").html(data);
+            });
+            $("html, body").animate({scrollTop: 250}, "slow");           
+        });
+    });
+</script>
 <%    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     List<Subject> listSucject = (List<Subject>) request.getAttribute("listSubject");
     List<Question> listQuestion = (List<Question>) request.getAttribute("listQuestion");
     String stringTotalPage = (String) request.getAttribute("totalPage");
     Integer totalPage = Integer.parseInt(stringTotalPage);
-
 
 %>
 <div class="agile_inner_banner_info">
@@ -109,13 +122,9 @@
             </nav>
         </div>
         <%} else {%>
-        <div class="services">
-            <div class="container">
-                <div class="col-md-8 event-left w3-agile-event-left" >
-                    Phấn đấu vì một tương lai
-                </div>
-            </div>
-        </div>       
+        <div class="col-md-8 event-left w3-agile-event-left" >
+            Hệ thống chưa cập nhật <a href="view"> Về trang chủ </a>
+        </div>
         <%}%>
         <div class="col-md-4 event-right wthree-event-right">
             <div class="search1 agileits-search1">

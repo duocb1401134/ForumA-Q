@@ -41,21 +41,25 @@ public class ListQuestionViewAjax extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String page = request.getParameter("page");
-        String rs="";
+        String rs = "";
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/plain");
-            
+
             try {
                 int intPage = Integer.parseInt(page);
                 rs = teamplate(intPage);
-            }catch(NumberFormatException e){
+                out.print(rs);
+            } catch (NumberFormatException e) {
                 
             }
-            out.print(rs);
         }
-        
     }
-
+//    public static void main(String[] args) {
+//        ListQuestionViewAjax listQuestionViewAjax = new ListQuestionViewAjax();
+//        System.out.println(listQuestionViewAjax.teamplate(1));
+//        System.out.println("___________________________________");
+//        System.out.println(listQuestionViewAjax.teamplate(2));
+//    }
     private String teamplate(int currentPage) {
         questionService = new QuestionServiceImpl();
         listQuestion = questionService.find(4, (currentPage - 1) * 4);
@@ -63,7 +67,6 @@ public class ListQuestionViewAjax extends HttpServlet {
         String outString = "";
         if (listQuestion.size() > 0) {
             for (int i = 0; i < listQuestion.size(); i++) {
-
                 if (i % 2 == 0) {
                     outString += "<div class=\"event-left1\">\n"
                             + "                        <div class=\"col-xs-6 event-left1-left\">\n"
@@ -83,7 +86,6 @@ public class ListQuestionViewAjax extends HttpServlet {
                             + "                        <div class=\"clearfix\"> </div>\n"
                             + "                    </div>\n";
                 } else {
-
                     outString += "   <div class=\"event-left1\">\n"
                             + "                        <div class=\"col-xs-6 event-left1-right\">\n"
                             + "                            <h4>" + dateFormat.format(listQuestion.get(i).getQuestionDate()) + "</h4>\n"
@@ -100,14 +102,13 @@ public class ListQuestionViewAjax extends HttpServlet {
                             + "                            </div>\n"
                             + "                        </div>\n"
                             + "                        <div class=\"clearfix\"> </div>\n"
-                            + "                    </div>";
-                }
-
+                            + "                    </div>\n";
+                }                
             }
         }
+        System.out.println(outString);
         return outString;
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

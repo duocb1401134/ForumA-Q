@@ -20,30 +20,28 @@ import vn.edu.ctu.forum.models.untils.ConnectionPoolImpl;
  */
 public class BaseDAOImpl implements BaseDAO {
 
-    private static final ConnectionPool connectionPool = new ConnectionPoolImpl();
+    private static ConnectionPool connectionPool;
     protected static Connection connection;
 
     // Contructor co tham so truyen vao la doi tuong ConnectionPool
     public BaseDAOImpl() {
-        // neu ConnectionPool truyen vao la null thi tao moi
         
-        try {
-            
-          connection = connectionPool.getConnectionPool();
-
-            // Set AutoCommit la false de thuc hien commit bang tay
-            if (connection.getAutoCommit()) {
-               connection.setAutoCommit(false);
-            }
-        } catch (SQLException e) {
+        if (connectionPool == null) {
+            connectionPool = new ConnectionPoolImpl();           
         }
-
+        try {
+            connection = connectionPool.getConnectionPool();
+            if (connection.getAutoCommit()) {
+                connection.setAutoCommit(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean executeUpdate(PreparedStatement pre) {
         if (pre != null) {
             try {
-
                 int numRow = pre.executeUpdate();
                 if (numRow == 0) {
                     connection.rollback();
@@ -149,7 +147,7 @@ public class BaseDAOImpl implements BaseDAO {
                 } else {
                     connection.commit();
                     ResultSet rs = pre.getGeneratedKeys();
-                    while(rs.next()){
+                    while (rs.next()) {
                         return rs.getInt(1);
                     }
                 }

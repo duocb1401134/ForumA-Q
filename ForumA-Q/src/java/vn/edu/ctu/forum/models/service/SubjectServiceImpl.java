@@ -49,6 +49,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (findById(sj.getSubjectId()) == null) {
            ImageService imageService = new ImageServiceImpl();
            int imageId = imageService.addGetLastId(img); 
+            
            if (imageId>0) {
                 Subject sb = new Subject(sj.getSubjectId(), sj.getSubjectName(), imageId);
                 return this.subjectDAO.addSubject(sb);

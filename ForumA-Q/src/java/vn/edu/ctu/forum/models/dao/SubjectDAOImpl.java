@@ -8,11 +8,9 @@ package vn.edu.ctu.forum.models.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vn.edu.ctu.forum.models.pojos.Subject;
-import vn.edu.ctu.forum.models.untils.ConnectionPool;
 
 /**
  *
@@ -42,8 +40,8 @@ public class SubjectDAOImpl extends BaseDAOImpl implements SubjectDAO {
         return kq;
     }
 //    public static void main(String[] args) {
-//        SubjectDAO sjDAO = new SubjectDAOImpl(null);
-//        Subject sb = new Subject("test", "test", 6);
+//        SubjectDAO sjDAO = new SubjectDAOImpl();
+//        Subject sb = new Subject("test","test", 26);
 //        if(sjDAO.addSubject(sb)){
 //            System.out.println("oke");
 //        }else System.out.println("out");

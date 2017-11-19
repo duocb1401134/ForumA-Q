@@ -32,14 +32,6 @@
             $(document).ready(function () {
                 var action = true;
                 var qsvt = new Number($('#qsvt').text());
-                $(".current_page").click(function () {
-                    var current_page = $(this).attr("page");
-                    $.post("listQuestionViewAjax", {page: current_page}, function (data) {
-                        $("#questionLoadAjax").html(data);
-                    });
-                    $("html, body").animate({scrollTop: 250}, "slow");
-                    return false;
-                });
                 $('#llike').click(function () {
                     var qsid = $('#qsid').val();
                     if (action) {

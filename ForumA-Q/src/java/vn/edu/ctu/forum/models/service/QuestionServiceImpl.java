@@ -212,7 +212,7 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionDAO.releaseConnection();
         return listQuestion;
     }
-
+    
     @Override
     public List<Question> findBySubjectLimit(String subjectId, int limit, int start) {
         ResultSet rs = this.questionDAO.findByIdSubject(subjectId, limit, start);
