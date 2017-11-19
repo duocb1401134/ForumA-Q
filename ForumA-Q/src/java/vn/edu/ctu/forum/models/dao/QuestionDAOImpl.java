@@ -140,7 +140,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     @Override
     public ResultSet findAll() {
         ResultSet kq;
-        String sql = "SELECT * FROM `question` where `question_accept`=1";
+        String sql = "SELECT * FROM `question` where `question_accept`=1 ";
         kq = this.get(sql);
         releaseConnection();
         return kq;
@@ -152,7 +152,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
-                    + " `member_id`=?";
+                    + " `member_id`=? ORDER BY `vote` DESC,`question_date` DESC";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
             kq = this.get(pre);
@@ -171,7 +171,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         String sql = "SELECT `question_id`, `subject_id`,"
                 + " `member_id`, `question_name`, `question_decription`,"
                 + " `question_content`, `question_date`, `question_accept`"
-                + " FROM `question` WHERE `question_accept`=0";
+                + " FROM `question` WHERE `question_accept`=0 ORDER BY `vote` DESC,`question_date` DESC";
 
         kq = this.get(sql);
         releaseConnection();
@@ -202,7 +202,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
-                    + " `subject_id`=?";
+                    + " `subject_id`=? ORDER BY `vote` DESC,`question_date` DESC";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, id);
             kq = this.get(pre);
@@ -235,7 +235,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     public ResultSet find(int limit, int start) {
         ResultSet kq;
         try {
-            String sql = "SELECT * FROM `question` where `question_accept` = 1 ORDER BY `question_date` DESC LIMIT ? OFFSET ?";
+            String sql = "SELECT * FROM `question` where `question_accept` = 1 ORDER BY `vote` DESC,`question_date` DESC LIMIT ? OFFSET ?";
             PreparedStatement pre = connection.prepareCall(sql);
             pre.setInt(1, limit);
             pre.setInt(2, start);
@@ -254,7 +254,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         try {
             String sql = "SELECT * FROM"
                     + " `question` WHERE"
-                    + " `question_id`=?";
+                    + " `question_id`=? ORDER BY `vote` DESC,`question_date` DESC";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, id);
             kq = this.get(pre);
@@ -271,7 +271,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
     public ResultSet findByIdSubject(String id, int litmit, int start) {
         ResultSet kq;
         try {
-            String sql = "SELECT * FROM `question` where `question_accept` = 1 and `subject_id` =? ORDER BY `question_date` DESC LIMIT ? OFFSET ?";
+            String sql = "SELECT * FROM `question` where `question_accept` = 1 and `subject_id` =? ORDER BY `vote` DESC,`question_date` DESC LIMIT ? OFFSET ?";
             PreparedStatement pre = QuestionDAOImpl.connection.prepareCall(sql);
             pre.setString(1, id);
             pre.setInt(2, litmit);
@@ -293,7 +293,7 @@ public class QuestionDAOImpl extends BaseDAOImpl implements QuestionDAO {
         for (String search : searchs) {
             sql += " and `question_name` like N'%" + search + "%'";
         }
-        sql += " ORDER BY `question_date` LIMIT ? OFFSET ?";
+        sql += " ORDER BY `vote` DESC,`question_date` DESC LIMIT ? OFFSET ?";
 
         try {
             pre = QuestionDAOImpl.connection.prepareCall(sql);

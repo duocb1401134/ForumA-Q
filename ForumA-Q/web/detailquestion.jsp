@@ -22,8 +22,8 @@
     List<Subject> listSubject = (List<Subject>) request.getAttribute("listSubject");
 %>
 <div class="agile_inner_banner_info">
-    <h2>Single</h2>
-    <p>Add Some Short Description</p>
+    <h2>Study And Share</h2>
+    <p>Phấn đấu vì một tương lai</p>
 </div>
 
 <%if (question != null) {%>

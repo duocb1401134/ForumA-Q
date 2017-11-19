@@ -29,17 +29,18 @@
 
 %>
 <div class="agile_inner_banner_info">
-    <h2>AA</h2>
-    <p>Add Some Short Description</p>
+    <h2>Study And Share</h2>
+    <p>Phấn đấu vì một tương lai</p>
 </div>
 
 <div class="services">
     <div class="container">
+        <% if (listQuestion.size() > 0) {%>
         <div class="col-md-8 event-left w3-agile-event-left" >
             <span id="questionLoadAjax">
-                <% if (listQuestion.size() > 0)
-                        for (int i = 0; i < listQuestion.size(); i++) {
-                            if (i % 2 == 0) {
+                <%
+                    for (int i = 0; i < listQuestion.size(); i++) {
+                        if (i % 2 == 0) {
                 %>                 
 
                 <div class="event-left1">
@@ -107,7 +108,15 @@
                 </ul>
             </nav>
         </div>
-
+        <%} else {%>
+        <div class="services">
+            <div class="container">
+                <div class="col-md-8 event-left w3-agile-event-left" >
+                    Phấn đấu vì một tương lai
+                </div>
+            </div>
+        </div>       
+        <%}%>
         <div class="col-md-4 event-right wthree-event-right">
             <div class="search1 agileits-search1">
                 <form action="view" method="post">
@@ -129,4 +138,5 @@
         <div class="clearfix"> </div>
     </div>
 </div>
+
 <%@include file="//template/footer.jsp" %>

@@ -10,6 +10,9 @@ html, body{
     background:#FFFFFF;
     margin: 0;
 }
+.current_page{
+    cursor:pointer;    
+}
 p,ul li,ol li{
     margin:0;
     letter-spacing:1px;

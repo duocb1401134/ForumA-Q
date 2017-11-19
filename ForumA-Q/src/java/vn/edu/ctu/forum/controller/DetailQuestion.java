@@ -36,25 +36,39 @@ public class DetailQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        if (request.getQueryString() != null) {
+        if (request.getQueryString().contains("questionId")) {
             String questionID = request.getParameter("questionId");
-            try {
-                int id = Integer.parseInt(questionID);
-                QuestionService questionService = new QuestionServiceImpl();
-                Question question = questionService.findById(id);
-                request.setAttribute("question", question);
-                AnwserService anwserService = new AnwserServiceImpl();
-                List<Answer> listAnswers = anwserService.findByIdQuesion(id);
-                SubjectService subjectService = new SubjectServiceImpl();
-                listSubject = subjectService.findAll();
-                if (listAnswers != null) {
-                    request.setAttribute("listSubject", listSubject);
-                    request.setAttribute("listAnswers", listAnswers);
+            System.out.println(questionID);
+            if (questionID != null) {
+                try {
+                    int id = Integer.parseInt(questionID);
+                    QuestionService questionService = new QuestionServiceImpl();
+                    Question question = questionService.findById(id);
+                    if (question != null) {
+                        request.setAttribute("question", question);
+                        AnwserService anwserService = new AnwserServiceImpl();
+                        List<Answer> listAnswers = anwserService.findByIdQuesion(id);
+                        subjectService = new SubjectServiceImpl();
+                        listSubject = subjectService.findAll();
+                        if (listAnswers != null) {
+                            request.setAttribute("listSubject", listSubject);
+                            request.setAttribute("listAnswers", listAnswers);
+                        }
+                    } else {
+                         response.sendError(404);
+                        return;
+                    }
+                } catch (NumberFormatException ex) {
+                    response.sendError(404);
+                    return;
                 }
-            } catch (NumberFormatException ex) {
+            } else {
+                response.sendError(404);
                 return;
             }
+        } else {
+             response.sendError(404);
+            return;
         }
         request.getRequestDispatcher("/detailquestion.jsp").forward(request, response);
     }
